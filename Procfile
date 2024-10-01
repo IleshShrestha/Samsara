@@ -1,1 +1,1 @@
-web: gunicorn Samsara.wsgi --log-file
+web: gunicorn Samsara.wsgi 
