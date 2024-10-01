@@ -18,7 +18,7 @@ SECRET_KEY = 'django-insecure-_lsr)o4c-kxuqxnxl^6qeznsr76nxs0i)3639&u8fj^#f))yez
 DEBUG = True
 
 ALLOWED_HOSTS = ['samsara-production.up.railway.app', 'https://samsara-production.up.railway.app']
-CSRF_TRUSTED_ORIGINS = ['samsara-production.up.railway.app', 'https://samsara-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://samsara-production.up.railway.app']
 
 # Application definition
 
