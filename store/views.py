@@ -66,3 +66,6 @@ def category(request, cat):
         messages.success(request, "That category doesn't exist")
         return redirect('home')
     
+
+def new_page(request):
+    return render(request, 'new_page.html', {})

@@ -69,9 +69,10 @@ def cart_update(request):
 
 # under dev for multiple porducts in cart    
 def create_checkout_session(request):
-    if request.method == "POST":
+    # if request.method == "POST":
         # {'item id' : quantity} from ajax
         products = request.POST.get('products')
+
         products = products.replace("'", "\"")
         json_prods = json.loads(products) 
 
@@ -106,10 +107,10 @@ def create_checkout_session(request):
             automatic_tax={'enabled': True},
 
         )
-        print(session)
         print(session.url)
-        return HttpResponseRedirect(session.url,status=303)
-    return render(request, 'cart_summary')
+        return HttpResponseRedirect(session.url)
+    # return render(request, 'cart_summary')
+
 
 @csrf_exempt
 @require_POST

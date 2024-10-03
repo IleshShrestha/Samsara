@@ -17,7 +17,7 @@ SECRET_KEY = 'django-insecure-_lsr)o4c-kxuqxnxl^6qeznsr76nxs0i)3639&u8fj^#f))yez
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['samsara-production.up.railway.app', 'https://samsara-production.up.railway.app']
+ALLOWED_HOSTS = ['samsara-production.up.railway.app', 'https://samsara-production.up.railway.app', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['https://samsara-production.up.railway.app']
 
 # Application definition
@@ -77,14 +77,17 @@ WSGI_APPLICATION = 'Samsara.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': os.environ['DB_PASSWORD'],
-        'HOST': 'autorack.proxy.rlwy.net',
-        'PORT': '51217',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+
+        # Postgres on Railway DB settings
+
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': os.environ['DB_NAME'],
+        # 'USER': os.environ['DB_USER'],
+        # 'PASSWORD': os.environ['DB_PASSWORD'],
+        # 'HOST': os.environ['DB_HOST'],
+        # 'PORT': os.environ['DB_PORT'],
     }
 }
 
@@ -141,12 +144,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email settings
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = '587'
-EMAIL_HOST_USER = os.getenv("SENDING_EMAIL")
-EMAIL_HOST_PASSWORD = os.getenv("GOOGLE_APP_PASSWORD")
-EMAIL_USE_TLS = True
-STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
-STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = '587'
+# EMAIL_HOST_USER = os.getenv("SENDING_EMAIL")
+# EMAIL_HOST_PASSWORD = os.getenv("GOOGLE_APP_PASSWORD")
+# EMAIL_USE_TLS = True
+
+# Stripe settings
+
+STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY_TEST")
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY_TEST")
 STRIPE_WEBHOOK_SECRET= ""
+
 

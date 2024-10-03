@@ -1,0 +1,71 @@
+{% extends 'base.html' %} {% block content %} {% load static%}
+<div class="product-container">
+  <!-- left side image -->
+  <div class="left-picture">
+    <img src="{% static 'images/file.png' %}" />
+  </div>
+
+  <!-- right side stuff -->
+  <div class="right-side">
+    <!-- product description -->
+    <div class="description">
+      <span>T-Shirt</span>
+      <h1>Samsara T-Shirt</h1>
+      <p>Description</p>
+      <h4>Size:</h4>
+    </div>
+    <div class="prod-config">
+      <!-- product size -->
+      <div class="prod-size">
+        <div>
+          <button>XS</button>
+
+          <button>S</button>
+
+          <button>M</button>
+
+          <button>L</button>
+
+          <button>XL</button>
+        </div>
+      </div>
+      <div class="prod-price">
+        <span></span>
+      </div>
+    </div>
+    <span> Price </span>
+    <button
+      class="btn btn-outline-dark flex-shrink-0"
+      type="button"
+      value="{{product.id}}"
+      id="add-cart"
+    >
+      <i class="bi-cart-fill me-1"></i>
+      Add to cart
+    </button>
+  </div>
+</div>
+<script>
+  // adding an item to the cart
+  $(document).on("click", "#add-cart", function (e) {
+    e.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: "{% url 'cart_add' %}",
+      data: {
+        product_id: $("#add-cart").val(),
+        product_qty: $("#cart-qty").val(),
+        csrfmiddlewaretoken: "{{csrf_token}}",
+        action: "post",
+      },
+
+      success: function (json) {
+        document.getElementById("cart_quantity").textContent = json.qty;
+        location.reload();
+      },
+
+      error: function (xhr, errmsg, err) {},
+    });
+  });
+</script>
+{% endblock %}

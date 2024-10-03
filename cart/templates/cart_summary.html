@@ -50,7 +50,7 @@
                                                 </dl>
             
                                                 <div class="m-t-sm">
-                                                    <a href="#"class="text-muted cart-del" data-index="{{product.id}}"><i class="fa fa-trash"></i> Remove item</a>
+                                                    <a class="text-muted cart-del" data-index="{{product.id}}"><i class="fa fa-trash"></i> Remove item</a>
                                                 </div>
                                             </td>
                                             {% if product.is_sale%}
@@ -91,12 +91,12 @@
         {% endfor %}
         <div class="ibox-content">
             <button class="btn btn-white"><i class="fa fa-arrow-left"></i> Continue shopping</button>  
-            <form id="create-checkout-session" action="{% url 'create_checkout_session' %}" method="POST">
-                {% csrf_token %}
+            <!-- <form id="create-checkout-session" action="{% url 'create_checkout_session' %}" method="POST"> -->
+                
                 <i class="fa fa fa-shopping-cart"></i>
-                <button class="btn btn-primary float-md-right cart-checkout" data-quant="{{cart_quantities}}">Checkout</button> 
-            </form>
-            
+                <button  class="btn btn-primary float-md-right" id="checkout-session" data-quant="{{cart_quantities}}">Checkout</button>
+            <!-- </form>
+             -->
             
             
 
@@ -189,9 +189,10 @@ $(document).on('click', '.cart-del', function(e){
 })
 
 // send info of cart to the stripe api
-$("#create-checkout-session").submit(function(e){
+$(document).on('click', '#checkout-session', function(e){
 
-var products = $(".cart-checkout").data('quant')
+    var products = $(this).data('quant')
+    console.log(products)
 
     e.preventDefault();
     $.ajax({
@@ -207,7 +208,7 @@ var products = $(".cart-checkout").data('quant')
 
         success: function(json){
             // document.getElementById("cart_quantity").textContent = json.qty
-            // location.reload()
+            
         },
 
         error: function(xhr, errmsg, err){
