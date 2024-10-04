@@ -114,6 +114,9 @@ body {
   line-height: 1;
 }
 
+.navbar ul {
+  text-align: right;
+}
 ol,
 ul {
   list-style: none;
@@ -132,6 +135,9 @@ q:after {
   content: none;
 }
 
+.container {
+  background-color: #f1f2ef;
+}
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -231,16 +237,6 @@ textarea {
     font-size: 11pt;
     letter-spacing: 0.0375em;
   }
-}
-
-a {
-  -moz-transition: color 0.2s ease, border-bottom-color 0.2s ease;
-  -webkit-transition: color 0.2s ease, border-bottom-color 0.2s ease;
-  -ms-transition: color 0.2s ease, border-bottom-color 0.2s ease;
-  transition: color 0.2s ease, border-bottom-color 0.2s ease;
-  border-bottom: dotted 1px;
-  color: inherit;
-  text-decoration: none;
 }
 
 a:hover {
@@ -2246,12 +2242,6 @@ ol li {
   padding-left: 0.25em;
 }
 
-ul {
-  list-style: disc;
-  margin: 0 0 2em 0;
-  padding-left: 1em;
-}
-
 ul li {
   padding-left: 0.5em;
 }
@@ -3440,69 +3430,6 @@ button:disabled,
   z-index: 10001;
 }
 
-#menu {
-  -moz-transform: translateX(-20em);
-  -webkit-transform: translateX(-20em);
-  -ms-transform: translateX(-20em);
-  transform: translateX(-20em);
-  -moz-transition: -moz-transform 0.5s ease;
-  -webkit-transition: -webkit-transform 0.5s ease;
-  -ms-transition: -ms-transform 0.5s ease;
-  transition: transform 0.5s ease;
-  -webkit-overflow-scrolling: touch;
-  background: #21b2a6;
-  color: #ffffff;
-  height: 100%;
-  max-width: 80%;
-  overflow-y: auto;
-  padding: 3em 2em;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 20em;
-  z-index: 10002;
-}
-
-#menu ul {
-  list-style: none;
-  padding: 0;
-}
-
-#menu ul > li {
-  border-top: solid 1px rgba(0, 0, 0, 0.125);
-  margin: 0.5em 0 0 0;
-  padding: 0.5em 0 0 0;
-}
-
-#menu ul > li:first-child {
-  border-top: 0 !important;
-  margin-top: 0 !important;
-  padding-top: 0 !important;
-}
-
-#menu ul > li > a {
-  border: 0;
-  color: inherit;
-  display: block;
-  font-size: 0.8em;
-  letter-spacing: 0.225em;
-  outline: 0;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-
-@media screen and (max-width: 736px) {
-  #menu ul > li > a {
-    line-height: 3em;
-  }
-}
-
-@media screen and (max-width: 736px) {
-  #menu {
-    padding: 3em 1.5em;
-  }
-}
-
 body.is-menu-visible #page-wrapper {
   opacity: 0.35;
 }
@@ -3558,70 +3485,6 @@ body.is-menu-visible #menu {
   #header h1 a {
     font-size: 0.8em;
   }
-}
-
-#header nav {
-  height: inherit;
-  line-height: inherit;
-  position: relative;
-  left: 0;
-  top: 0;
-}
-
-#header nav > ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  white-space: nowrap;
-}
-
-#header nav > ul > li {
-  display: inline-block;
-  padding: 0;
-}
-
-#header nav > ul > li > a {
-  border: 0;
-  color: #fff;
-  display: block;
-  font-size: 0.8em;
-  letter-spacing: 0.225em;
-  padding: 0 1.5em;
-  text-transform: uppercase;
-}
-
-#header nav > ul > li > a.menuToggle {
-  outline: 0;
-  position: relative;
-}
-
-@media screen and (max-width: 736px) {
-  #header nav > ul > li > a.menuToggle {
-    padding: 0 1.5em;
-  }
-
-  #header nav > ul > li > a.menuToggle span {
-    display: none;
-  }
-}
-
-@media screen and (max-width: 736px) {
-  #header nav > ul > li > a {
-    padding: 0 0 0 1.5em;
-  }
-}
-
-#header nav > ul > li:first-child {
-  margin-left: 0;
-}
-
-#header.alt {
-  background: transparent;
-}
-
-#header.alt h1 {
-  pointer-events: none;
-  opacity: 0;
 }
 
 /* Banner */
@@ -3856,89 +3719,11 @@ body.is-preload #banner:after {
 
 /* Main */
 
-#main > header {
-  padding: 12em 0 10em 0;
-  background-image: -moz-linear-gradient(
-    top,
-    rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.5)
-  );
-  background-image: -webkit-linear-gradient(
-    top,
-    rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.5)
-  );
-  background-image: -ms-linear-gradient(
-    top,
-    rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.5)
-  );
-  background-image: linear-gradient(
-    top,
-    rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.5)
-  );
-  background-attachment: fixed;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  text-align: center;
-}
-
-#main > header h2 {
-  font-size: 1.75em;
-  margin: 0 0 0.5em 0;
-}
-
-#main > header p {
-  color: inherit;
-  letter-spacing: 0.225em;
-  text-transform: uppercase;
-  top: 0;
-}
-
-#main > header p a {
-  color: inherit;
-}
-
-@media screen and (max-width: 1680px) {
-  #main > header {
-    padding: 10em 0 8em 0;
-  }
-}
-
-@media screen and (max-width: 1280px) {
-  #main > header {
-    padding: 8em 3em 6em 3em;
-  }
-}
-
-@media screen and (max-width: 980px) {
-  #main > header {
-    padding: 10em 3em 8em 3em;
-  }
-}
-
-@media screen and (max-width: 736px) {
-  #main > header {
-    padding: 5em 3em 3em 3em;
-  }
-
-  #main > header h2 {
-    font-size: 1.25em;
-    margin: 0 0 1em 0;
-  }
-}
-
-body.is-mobile #main > header {
-  background-attachment: scroll;
-}
-
 /* Footer */
 
 #footer {
   padding: 6em 0 4em 0;
-  background-color: #1d242a;
+  background-color: #f1f2ef;
   text-align: center;
 }
 
@@ -3947,11 +3732,11 @@ body.is-mobile #main > header {
 }
 
 #footer .icons a {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(0, 0, 0, 0.5);
 }
 
 #footer .icons a:hover {
-  color: #fff;
+  color: #000;
 }
 
 #footer .copyright {
@@ -4011,11 +3796,10 @@ body.is-mobile #main > header {
 
 body.landing #page-wrapper {
   background-image: -moz-linear-gradient(
-      top,
-      rgba(0, 0, 0, 0.5),
-      rgba(0, 0, 0, 0.5)
-    ),
-    url("{% static 'images/banner.jpg%}");
+    top,
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)
+  );
   background-image: -webkit-linear-gradient(
     top,
     rgba(0, 0, 0, 0.5),
@@ -4031,6 +3815,7 @@ body.landing #page-wrapper {
     rgba(0, 0, 0, 0.5),
     rgba(0, 0, 0, 0.5)
   );
+
   background-attachment: fixed;
   background-position: center center;
   background-repeat: no-repeat;
@@ -4038,14 +3823,12 @@ body.landing #page-wrapper {
   padding-top: 0;
 }
 
-body.landing #footer {
-  background-color: rgba(29, 36, 42, 0.9);
-}
-
 body.is-mobile.landing #page-wrapper {
   background: none;
 }
-
+.bg-nav {
+  background-color: #f1f2ef;
+}
 body.is-mobile.landing #banner,
 body.is-mobile.landing .wrapper.style4 {
   background-image: -moz-linear-gradient(
@@ -4071,8 +3854,4 @@ body.is-mobile.landing .wrapper.style4 {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-body.is-mobile.landing #footer {
-  background-color: #1d242a;
 }

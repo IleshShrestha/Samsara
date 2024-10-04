@@ -27,8 +27,9 @@ class Product(models.Model):
     name = models.CharField(max_length=50)
     price = models.DecimalField(default=0, decimal_places=2, max_digits=6)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
-    description = models.CharField(max_length=250, default='', blank=True, null=True)
-    image = models.ImageField(upload_to='uploads/product')
+    description = models.CharField(max_length=250, default='', null=True, blank=True)
+    image = models.ImageField(upload_to='uploads/product', null=True, blank=True)
+    image_hover = models.ImageField(upload_to='uploads/hover', null=True, blank=True)
     
     # Sales Stuff
     is_sale = models.BooleanField(default=False)
