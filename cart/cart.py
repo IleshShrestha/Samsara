@@ -54,7 +54,6 @@ class Cart():
         
         product_ids = list(self.cart.keys())
         products = Product.objects.filter(id__in = product_ids)
-        print("This is the prod ids" + str(product_ids))
         return [products, product_ids]
     
     def get_quants(self):
@@ -77,7 +76,6 @@ class Cart():
     def delete(self, product):
         
         product_id = str(product)
-        oldcart = self.cart
         if product_id in self.cart:
             del self.cart[product_id]
 

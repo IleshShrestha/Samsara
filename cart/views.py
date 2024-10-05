@@ -10,8 +10,10 @@ from django.utils.encoding import smart_str
 from django.contrib.auth.models import User
 import stripe
 import json
+import time
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
 
 
 def cart_summary(request):
@@ -71,20 +73,24 @@ def cart_update(request):
 def create_checkout_session(request):
     # if request.method == "POST":
         # {'item id' : quantity} from ajax
-        products = request.POST.get('products')
+        cart = Cart(request)
 
-        products = products.replace("'", "\"")
-        json_prods = json.loads(products) 
-
-        list_of_prod = {}
+        cart_quant = cart.get_quants()
+        cart_products, prod_ids = cart.get_prods()
+        # cart_quant { prod_id : quant, ....} cart_prods{[prod objects]}
+        print(f"cart quants {cart_quant} and cart protds {cart_products[0].name}")
         # {'product': product price} 
-        for key, value in json_prods.items():
-            product = get_object_or_404(Product, id=key)
+        list_of_prod = {}
+        for product in cart_products:
+
+            quantity = cart_quant[str(product.pk)]
+            name = product.name
             if product.is_sale:
-                list_of_prod[product.id] = [product.name, int(product.sale_price * 100), json_prods[str(product.id)]]
+                list_of_prod[product.id] = [name, int(product.sale_price * 100), quantity ]
             else:
-                list_of_prod[product.id] = [product.name, int(product.price * 100), json_prods[str(product.id)]]
-        items = []        
+                list_of_prod[product.id] = [name, int(product.price * 100), quantity]
+        items = []
+        print(list_of_prod)
         for key, value in list_of_prod.items():
             items.append({
                 "price_data": {
@@ -103,13 +109,14 @@ def create_checkout_session(request):
             mode="payment",
             success_url= request.build_absolute_uri(reverse("success")),
             cancel_url=request.build_absolute_uri(reverse("cancel")),
-            metadata={"product_ids": json_prods.keys(), "user_id": request.user.id},
+            metadata={"product_ids": cart_quant.keys(), "user_id": request.user.id},
             automatic_tax={'enabled': True},
 
         )
         print(session.url)
-        return HttpResponseRedirect(session.url)
-    # return render(request, 'cart_summary')
+        time.sleep(2)
+        return redirect(session.url, code=303)
+
 
 
 @csrf_exempt

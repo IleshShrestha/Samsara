@@ -17,8 +17,9 @@ SECRET_KEY = 'django-insecure-_lsr)o4c-kxuqxnxl^6qeznsr76nxs0i)3639&u8fj^#f))yez
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['samsara-production.up.railway.app', 'https://samsara-production.up.railway.app', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ['https://samsara-production.up.railway.app']
+# ALLOWED_HOSTS = ['samsara-production.up.railway.app', 'https://samsara-production.up.railway.app', '127.0.0.1']
+# CSRF_TRUSTED_ORIGINS = ['https://samsara-production.up.railway.app']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -34,14 +35,12 @@ INSTALLED_APPS = [
     'home',
     'blog',
     'events',
-    'corsheaders',
     'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -152,8 +151,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Stripe settings
 
-STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY_TEST")
-STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY_TEST")
+STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 STRIPE_WEBHOOK_SECRET= ""
 
 

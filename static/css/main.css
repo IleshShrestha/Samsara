@@ -135,7 +135,7 @@ q:after {
   content: none;
 }
 
-.container {
+.set-color {
   background-color: #f1f2ef;
 }
 table {
@@ -3725,6 +3725,9 @@ body.is-preload #banner:after {
   padding: 6em 0 4em 0;
   background-color: #f1f2ef;
   text-align: center;
+  border-top: #2e3842 solid;
+  border-radius: 1px;
+  background-clip: padding-box;
 }
 
 #footer .icons {

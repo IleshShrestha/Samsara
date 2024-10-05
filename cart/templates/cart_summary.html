@@ -94,7 +94,7 @@
             <!-- <form id="create-checkout-session" action="{% url 'create_checkout_session' %}" method="POST"> -->
                 
                 <i class="fa fa fa-shopping-cart"></i>
-                <button  class="btn btn-primary float-md-right" id="checkout-session" data-quant="{{cart_quantities}}">Checkout</button>
+                <a href="{% url 'create_checkout_session'%}" class="btn btn-primary float-md-right" id="checkout-session" data-quant="{{cart_quantities}}">Checkout</a>
             <!-- </form>
              -->
             
@@ -138,7 +138,7 @@ $(document).on('change', '.cart-sum', function(e){
 
     e.preventDefault();
     $.ajax({
-        type: 'POST',
+        type: 'GET',
         url: "{% url 'cart_update' %}",
         data: {
             product_id: productid,
@@ -187,36 +187,5 @@ $(document).on('click', '.cart-del', function(e){
     });
 
 })
-
-// send info of cart to the stripe api
-$(document).on('click', '#checkout-session', function(e){
-
-    var products = $(this).data('quant')
-    console.log(products)
-
-    e.preventDefault();
-    $.ajax({
-        
-        type: 'POST',
-        url: "{% url 'create_checkout_session' %}",
-        data: {
-            products: products,
-            csrfmiddlewaretoken: '{{csrf_token}}',
-            action: 'post'
-        },
-        "crossDomain": true,
-
-        success: function(json){
-            // document.getElementById("cart_quantity").textContent = json.qty
-            
-        },
-
-        error: function(xhr, errmsg, err){
-        
-        }
-    });
-
-})
-
 </script>
 {% endblock %}

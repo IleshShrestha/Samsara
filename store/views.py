@@ -67,5 +67,7 @@ def category(request, cat):
         return redirect('home')
     
 
-def new_page(request):
-    return render(request, 'new_page.html', {})
+def new_page(request, pk):
+    product = Product.objects.get(id=pk)
+    category = Product.objects.filter(category=product.category)
+    return render(request, 'new_page.html', {'product': product, 'pk': pk, 'category': category})

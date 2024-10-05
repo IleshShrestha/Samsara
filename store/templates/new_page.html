@@ -2,7 +2,7 @@
 <div class="product-container">
   <!-- left side image -->
   <div class="left-picture">
-    <img src="{% static 'images/file.png' %}" />
+    <img src="{{product.image.url}}" />
   </div>
 
   <!-- right side stuff -->
@@ -33,7 +33,7 @@
         <span></span>
       </div>
     </div>
-    <span> Price </span>
+    <span> {{product.price}} </span>
     <button
       class="btn btn-outline-dark flex-shrink-0"
       type="button"
@@ -45,6 +45,7 @@
     </button>
   </div>
 </div>
+
 <script>
   // adding an item to the cart
   $(document).on("click", "#add-cart", function (e) {
@@ -54,7 +55,7 @@
       url: "{% url 'cart_add' %}",
       data: {
         product_id: $("#add-cart").val(),
-        product_qty: $("#cart-qty").val(),
+        product_qty: "1",
         csrfmiddlewaretoken: "{{csrf_token}}",
         action: "post",
       },
