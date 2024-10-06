@@ -1,89 +1,50 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} {% block content %} {% load static%}
+<div class="product-container">
+  <!-- left side image -->
+  <div class="left-picture">
+    <img src="{{product.image.url}}" data-hover="{{product.image_hover.url}}" />
+  </div>
 
-<section class="py-5">
-  <div class="container px-4 px-lg-5 my-5">
-    <div class="row gx-4 gx-lg-5 align-items-center">
-      <div class="col-md-6">
-        <img
-          class="card-img-top mb-5 mb-md-0 change-img"
-          src="{{product.image.url}}"
-          alt="..."
-          data-hover="{{product.image_hover.url}}"
-        />
+  <!-- right side stuff -->
+  <div class="right-side">
+    <!-- product description -->
+    <div class="description">
+      <span>T-Shirt</span>
+      <h1>Samsara T-Shirt</h1>
+      <p>Description</p>
+      <h4>Size:</h4>
+    </div>
+    <div class="prod-config">
+      <!-- product size -->
+      <div class="prod-size">
+        <div>
+          <button class="selected" value="XS">XS</button>
+
+          <button value="S">S</button>
+
+          <button value="M">M</button>
+
+          <button value="L">L</button>
+
+          <button value="XL">XL</button>
+        </div>
       </div>
-      <div class="col-md-6">
-        <div class="small mb-1">{{pk}}: product id</div>
-        <h1 class="display-5 fw-bolder">{{product.name}}</h1>
-        <div class="fs-5 mb-5">
-          {% if product.is_sale %}
-          <strike>${{product.price}}</strike> -> ${{product.sale_price}} {% else
-          %} ${{product.price}} {% endif %}
-        </div>
-        <p class="lead">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium
-          at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi
-          alias magni, accusamus eius blanditiis delectus ipsam minima ea iste
-          laborum vero?
-        </p>
-        <div class="d-flex">
-          <input
-            class="form-control text-center me-3"
-            type="num"
-            value="1"
-            style="max-width: 3rem"
-            id="cart-qty"
-          />
-          <button
-            class="btn btn-outline-dark flex-shrink-0"
-            type="button"
-            value="{{product.id}}"
-            id="add-cart"
-          >
-            <i class="bi-cart-fill me-1"></i>
-            Add to cart
-          </button>
-        </div>
+      <div class="prod-price">
+        <span></span>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="py-5 bg-light">
-  <div class="container px-4 px-lg-5 mt-5">
-    <h2 class="fw-bolder mb-4">Related products</h2>
-    <div
-      class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
+    <span> {{product.price}} </span>
+    <button
+      class="btn btn-outline-dark flex-shrink-0"
+      type="button"
+      value="{{product.id}}"
+      id="add-cart"
     >
-      {% for category in category %} {% if category.name != product.name %}
-      <div class="col mb-5">
-        <div class="card h-100">
-          <!-- Product image-->
-          <img class="card-img-top" src="{{category.image.url}}" alt="..." />
-          <!-- Product details-->
-          <div class="card-body p-4">
-            <div class="text-center">
-              <!-- Product name-->
-              <h5 class="fw-bolder">{{category.name}}</h5>
-              <!-- Product price-->
-              {{category.price}}
-            </div>
-          </div>
-          <!-- Product actions-->
-          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center">
-              <a
-                class="btn btn-outline-dark mt-auto"
-                href="{% url 'product' category.id %}"
-                >View product</a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-      {% else %} {% endif %} {% endfor %}
-    </div>
+      <i class="bi-cart-fill me-1"></i>
+      Add to cart
+    </button>
   </div>
-</section>
+</div>
 
 <script>
   // adding an item to the cart
@@ -94,8 +55,8 @@
       url: "{% url 'cart_add' %}",
       data: {
         product_id: $("#add-cart").val(),
-        product_qty: $("#cart-qty").val(),
-        size: $("#size-selected").val(),
+        product_qty: "1",
+        size: $(".selected").val(),
         csrfmiddlewaretoken: "{{csrf_token}}",
         action: "post",
       },
@@ -109,13 +70,20 @@
     });
   });
 
-  src_iamge = $("#change-img").attr("src");
-  hover_image = $("#change-img").data("hover");
-  $("#change-img").on("mouseover", function () {
-    $(this).attr("src", hover_image);
-  });
-  $("#change-img").on("mouseout", function () {
-    $(this).attr("src", hover_image);
+  $(document).ready(function () {
+    $(".prod-size button").on("click", function () {
+      $(".selected").removeClass("selected");
+      $(this).addClass("selected");
+    });
+
+    src_image = $("#change-img").attr("src");
+    hover_image = $("#change-img").data("hover");
+    $("#change-img").on("mouseover", function () {
+      $(this).attr("src", hover_image);
+    });
+    $("#change-img").on("mouseout", function () {
+      $(this).attr("src", src_image);
+    });
   });
 </script>
 {% endblock %}
