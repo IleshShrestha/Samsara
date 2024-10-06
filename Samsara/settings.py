@@ -17,9 +17,9 @@ SECRET_KEY = 'django-insecure-_lsr)o4c-kxuqxnxl^6qeznsr76nxs0i)3639&u8fj^#f))yez
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['samsara-production.up.railway.app', 'https://samsara-production.up.railway.app', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ['https://samsara-production.up.railway.app']
-# ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['samsara-production.up.railway.app', 'https://samsara-production.up.railway.app', '127.0.0.1']
+# CSRF_TRUSTED_ORIGINS = ['https://samsara-production.up.railway.app']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -81,12 +81,12 @@ DATABASES = {
 
         # Postgres on Railway DB settings
 
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['DB_NAME'],
-        'USER': os.environ['DB_USER'],
-        'PASSWORD': os.environ['DB_PASSWORD'],
-        'HOST': os.environ['DB_HOST'],
-        'PORT': os.environ['DB_PORT'],
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': os.environ['DB_NAME'],
+        # 'USER': os.environ['DB_USER'],
+        # 'PASSWORD': os.environ['DB_PASSWORD'],
+        # 'HOST': os.environ['DB_HOST'],
+        # 'PORT': os.environ['DB_PORT'],
     }
 }
 
@@ -151,8 +151,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Stripe settings
 
-STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
-STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
+STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY_TEST")
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KE_TEST")
 STRIPE_WEBHOOK_SECRET= ""
 
 
