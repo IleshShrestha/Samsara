@@ -264,7 +264,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #fff;
+  color: #000;
   font-weight: 800;
   letter-spacing: 0.225em;
   line-height: 1em;
@@ -3723,11 +3723,17 @@ body.is-preload #banner:after {
 
 #footer {
   padding: 6em 0 4em 0;
-  background-color: #f1f2ef;
+  background-color: #2e3842;
   text-align: center;
-  border-top: #2e3842 solid;
+
   border-radius: 1px;
   background-clip: padding-box;
+}
+
+#footer .non-main {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 
 #footer .icons {
@@ -3735,7 +3741,7 @@ body.is-preload #banner:after {
 }
 
 #footer .icons a {
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.4);
 }
 
 #footer .icons a:hover {
@@ -3829,9 +3835,7 @@ body.landing #page-wrapper {
 body.is-mobile.landing #page-wrapper {
   background: none;
 }
-.bg-nav {
-  background-color: #f1f2ef;
-}
+
 body.is-mobile.landing #banner,
 body.is-mobile.landing .wrapper.style4 {
   background-image: -moz-linear-gradient(

@@ -22,8 +22,13 @@ def cart_summary(request):
     cart = Cart(request)
     quantities = cart.get_quants()
     cart_products, prod_ids = cart.get_prods()
-    totals = cart.cart_total()
-    return render(request, "cart_summary.html", {"cart_products": cart_products, "cart_quantities": quantities, "totals": totals, "prod_ids": prod_ids})
+    # toal = #, individual = {"id": #}
+    total, individual_totals = cart.cart_total()
+
+    print(total)
+    for product in cart_products:
+        print(product.id)
+    return render(request, "cart_summary.html", {"cart_products": cart_products, "cart_quantities": quantities,"individual_totals": individual_totals, "total": total, "prod_ids": prod_ids})
 
 
 def cart_add(request):
@@ -35,6 +40,7 @@ def cart_add(request):
         # Get stuff
         product_id = int(request.POST.get('product_id'))
         product_qty = int(request.POST.get('product_qty'))
+        size = (request.POST.get('size'))
 
         # lookup product in DB
         product = get_object_or_404(Product, id=product_id)
@@ -45,7 +51,7 @@ def cart_add(request):
         cart_quantity = cart.__len__()       
 
         # Return resonse
-        response = JsonResponse({'qty': cart_quantity})
+        response = JsonResponse({'qty': cart_quantity, 'size': size})
         messages.success(request, "Item was added to the cart")
 
         return response
@@ -66,6 +72,8 @@ def cart_update(request):
     if request.POST.get('action') == 'post':
         product_id = int(request.POST.get('product_id'))
         product_qty = int(request.POST.get('product_qty'))
+        print("info")
+        print(product_id, product_qty)
         cart.update(product = product_id, quantity = product_qty)
         messages.success(request, ("Your cart has been updated!"))
         return redirect('cart_summary')
@@ -112,10 +120,11 @@ def create_checkout_session(request):
             cancel_url=request.build_absolute_uri(reverse("cancel")),
             metadata={"product_ids": cart_quant.keys(), "user_id": request.user.id},
             automatic_tax={'enabled': True},
+            shipping_address_collection={"allowed_countries": ["US"]},
 
         )
         print(session.url)
-        time.sleep(2)
+
         return redirect(session.url, code=303)
 
 

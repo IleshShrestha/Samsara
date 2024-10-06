@@ -18,15 +18,15 @@
       <!-- product size -->
       <div class="prod-size">
         <div>
-          <button>XS</button>
+          <button class="selected" value="XS">XS</button>
 
-          <button>S</button>
+          <button value="S">S</button>
 
-          <button>M</button>
+          <button value="M">M</button>
 
-          <button>L</button>
+          <button value="L">L</button>
 
-          <button>XL</button>
+          <button value="XL">XL</button>
         </div>
       </div>
       <div class="prod-price">
@@ -56,6 +56,7 @@
       data: {
         product_id: $("#add-cart").val(),
         product_qty: "1",
+        size: $(".selected").val(),
         csrfmiddlewaretoken: "{{csrf_token}}",
         action: "post",
       },
@@ -69,13 +70,20 @@
     });
   });
 
-  src_iamge = $("#change-img").attr("src");
-  hover_image = $("#change-img").data("hover");
-  $("#change-img").on("mouseover", function () {
-    $(this).attr("src", hover_image);
-  });
-  $("#change-img").on("mouseout", function () {
-    $(this).attr("src", hover_image);
+  $(document).ready(function () {
+    $(".prod-size button").on("click", function () {
+      $(".selected").removeClass("selected");
+      $(this).addClass("selected");
+    });
+
+    src_image = $("#change-img").attr("src");
+    hover_image = $("#change-img").data("hover");
+    $("#change-img").on("mouseover", function () {
+      $(this).attr("src", hover_image);
+    });
+    $("#change-img").on("mouseout", function () {
+      $(this).attr("src", src_image);
+    });
   });
 </script>
 {% endblock %}

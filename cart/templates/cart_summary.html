@@ -1,191 +1,164 @@
-{% extends 'base.html' %}
-{% block content %}
-    <!-- Header-->
-    <header class="bg-dark py-5">
-        <div class="container px-4 px-lg-5 my-5">
-            <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">Shopping cart</h1>
-                <p class="lead fw-normal text-white-50 mb-0">...</p>
-            </div>
-        </div>
-        
-    </header>
-    <div class="container" >
+{% extends 'base.html' %} {% block content %}
+
+<div class="container">
+  <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+      <div class="col-md-9">
         <div class="ibox">
-            <div class="ibox-title">
-                <span class="pull-right">(<strong>{{cart|length}}</strong>) items</span>
-                <h5>Items in your cart</h5>
+          <div class="ibox-title">
+            <span class="pull-right"
+              >(<strong>{{cart|length}}</strong>) items</span
+            >
+            <h5>Items in your cart</h5>
+          </div>
+          {% for product in cart_products %}
+          <div class="ibox-content">
+            <div class="table-responsive">
+              <table class="table shoping-cart-table">
+                <tbody>
+                  <tr>
+                    <td width="90">
+                      <div class="cart-product-imitation"></div>
+                    </td>
+                    <td class="desc">
+                      <h3>
+                        <a href="#" class="text-navy"> {{product.name}} </a>
+                      </h3>
+                      <p class="small">{{product.description}}</p>
+                      <dl class="small m-b-none">
+                        <dt>Description lists</dt>
+                        <dd>
+                          A description list is perfect for defining terms.
+                        </dd>
+                      </dl>
+
+                      <div class="m-t-sm">
+                        <a
+                          href="#"
+                          class="text-muted cart-del"
+                          data-index="{{product.id}}"
+                          ><i class="fa fa-trash"></i> Remove item</a
+                        >
+                      </div>
+                    </td>
+
+                    {% if product.is_sale%}
+                    <td>
+                      ${{product.sale_price}}
+                      <s class="small text-muted">${{product.price}}</s>
+                    </td>
+                    {% else %}
+                    <td>${{product.price}}</td>
+
+                    {% endif%} {% for key, value in cart_quantities.items %}
+                    {%if key == product.id|slugify %}
+                    <td width="65">
+                      <input
+                        type="text"
+                        class="form-control cart-sum"
+                        value="{{value}}"
+                        id="cart{{product.id}}"
+                        data-index="{{product.id}}"
+                      />
+                    </td>
+                    <!-- <td>
+                      <h4>{{individual_totals.}}</h4>
+                    </td> -->
+                    {% endif %} {% endfor %}
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </div>
+          {% endfor %}
+          <div class="ibox-content">
+            <button class="btn btn-primary pull-right">
+              <i class="fa fa fa-shopping-cart"></i> Checkout
+            </button>
+            <button class="btn btn-white">
+              <i class="fa fa-arrow-left"></i> Continue shopping
+            </button>
+          </div>
         </div>
+      </div>
+      <div class="col-md-3">
+        <div class="ibox">
+          <div class="ibox-title">
+            <h5>Cart Summary</h5>
+          </div>
+          <div class="ibox-content">
+            <span> Total </span>
+            <h2 class="font-bold">{{total}}</h2>
 
-
-
-        {% for product in cart_products %}
-            <div class="wrapper wrapper-content animated fadeInRight">
-                <div class="row">
-                    <div class="col-md-9">
-                        <div class="ibox">
-                            <div class="ibox-content">
-                                <div class="table-responsive">
-                                    <table class="table shoping-cart-table">
-                                        <tbody>
-                                        <tr>
-                                            <td width="90">
-                                                <div class="cart-product-imitation">
-                                                </div>
-                                            </td>
-                                            <td class="desc">
-                                                <h3>
-                                                <a href="#" class="text-navy">
-                                                    {{product.name}}
-                                                </a>
-                                                </h3>
-                                                <p class="small">
-                                                    It is a long established fact that a reader will be distracted by the readable
-                                                    content of a page when looking at its layout. The point of using Lorem Ipsum is
-                                                </p>
-                                                <dl class="small m-b-none">
-                                                    <dt>Description lists</dt>
-                                                    <dd>A description list is perfect for defining terms.</dd>
-                                                </dl>
-            
-                                                <div class="m-t-sm">
-                                                    <a class="text-muted cart-del" data-index="{{product.id}}"><i class="fa fa-trash"></i> Remove item</a>
-                                                </div>
-                                            </td>
-                                            {% if product.is_sale%}
-                                            <td>
-                                                ${{product.sale_price}}
-                                                <s class="small text-muted">${{product.price}}</s>
-                                            </td>
-                                            {% else %}
-                                            <td>${{product.price}}</td>
-                                                
-                                                
-                                            </td>
-                                            {% endif %}
-                                            {% for key, value in cart_quantities.items %}
-                                                {% if  key == product.id|slugify %}
-                                                <td width="65">
-                                                    <input type="text" class="form-control cart-sum" value="{{value}}" id="cart{{product.id}}" data-index="{{product.id}}">
-                                                </td>
-                                                {% endif %}
-
-                                            {% endfor %}
-                                            <td>
-                                                <h4>
-                                                    $180,00
-                                                </h4>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-            
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                
-        {% endfor %}
-        <div class="ibox-content">
-            <button class="btn btn-white"><i class="fa fa-arrow-left"></i> Continue shopping</button>  
-            <!-- <form id="create-checkout-session" action="{% url 'create_checkout_session' %}" method="POST"> -->
-                
-                <i class="fa fa fa-shopping-cart"></i>
-                <a href="{% url 'create_checkout_session'%}" class="btn btn-primary float-md-right" id="checkout-session" data-quant="{{cart_quantities}}">Checkout</a>
-            <!-- </form>
-             -->
-            
-            
-
-        </div>
-    </div>
-    <div class="container">
-
-        <div class="row justify-content-end">
-            <div class="border col-md-4 col-lg-offset-2">
-                <strong>Summary:</strong><br>
-                subtotal: <br>
-                discount: <br>
-                Tax: <br>
-                <hr>
-                <br>
-                <div class="row ">
-                    <div class="col-md-6">
-                        Total:
-                    </div>
-                    <div class="col-md-2 justify-content-center "></div>
-                        ${{totals}}
-                    </div>
-                </div>
-            
+            <hr />
+            <span class="text-muted small">
+              *Applicable taxes and fees will be applied on checkout
+            </span>
+            <div class="m-t-sm">
+              <div class="btn-group">
+                <a
+                  href="{% url 'create_checkout_session'%}"
+                  class="btn btn-primary btn-sm"
+                  ><i class="fa fa-shopping-cart"></i> Checkout</a
+                >
+                <a href="#" class="btn btn-white btn-sm"> Cancel</a>
+              </div>
             </div>
-
-
+          </div>
         </div>
-
-
+      </div>
     </div>
+  </div>
+</div>
 
 <script>
+  // update cart
+  $(document).on("change", ".cart-sum", function (e) {
+    var productid = $(this).data("index");
 
-// update cart
-$(document).on('change', '.cart-sum', function(e){
+    e.preventDefault();
+    console.log("sending data");
+    $.ajax({
+      type: "GET",
+      url: "{% url 'cart_update' %}",
+      data: {
+        product_id: productid,
+        product_qty: $("#cart" + productid).val(),
+        csrfmiddlewaretoken: "{{csrf_token}}",
+        action: "post",
+      },
 
-    var productid = $(this).data('index')
+      success: function (json) {
+        // document.getElementById("cart_quantity").textContent = json.qty
+        location.reload();
+      },
+
+      error: function (xhr, errmsg, err) {},
+    });
+  });
+
+  // delete item from the cart
+
+  $(document).on("click", ".cart-del", function (e) {
+    var productid = $(this).data("index");
 
     e.preventDefault();
     $.ajax({
-        type: 'GET',
-        url: "{% url 'cart_update' %}",
-        data: {
-            product_id: productid,
-            product_qty: $('#cart'+productid).val(),
-            csrfmiddlewaretoken: '{{csrf_token}}',
-            action: 'post'
-        },
+      type: "POST",
+      url: "{% url 'cart_delete' %}",
+      data: {
+        product_id: productid,
+        csrfmiddlewaretoken: "{{csrf_token}}",
+        action: "post",
+      },
 
-        success: function(json){
-            // document.getElementById("cart_quantity").textContent = json.qty
-            location.reload()
-        },
+      success: function (json) {
+        location.reload();
+      },
 
-        error: function(xhr, errmsg, err){
-
-        }
+      error: function (xhr, errmsg, err) {},
     });
-
-})
-
-// delete item from the cart
-
-$(document).on('click', '.cart-del', function(e){
-
-    var productid = $(this).data('index')
-
-    e.preventDefault();
-    $.ajax({
-        type: 'POST',
-        url: "{% url 'cart_delete' %}",
-        data: {
-            product_id: productid,
-            csrfmiddlewaretoken: '{{csrf_token}}',
-            action: 'post'
-        },
-
-        success: function(json){
-
-            location.reload()
-        },
-
-        error: function(xhr, errmsg, err){
-        
-
-        }
-    });
-
-})
+  });
 </script>
+
 {% endblock %}

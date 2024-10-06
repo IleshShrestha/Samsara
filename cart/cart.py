@@ -32,6 +32,7 @@ class Cart():
         products = Product.objects.filter(id__in=products_ids)
         quantities = self.cart
         total = 0
+        individual_totals = {}
 
         for product in products:
 
@@ -40,12 +41,13 @@ class Cart():
 
                 if product.is_sale:
                     total += product.sale_price * value
+                    individual_totals[product.id] = product.sale_price * value
 
                 else:
                     total += product.price * value
-        
+                    individual_totals[product.id] = product.price * value
 
-        return total
+        return total, individual_totals
         
     def __len__(self):
         return len(self.cart)
