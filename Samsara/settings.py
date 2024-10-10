@@ -17,9 +17,9 @@ SECRET_KEY = 'django-insecure-_lsr)o4c-kxuqxnxl^6qeznsr76nxs0i)3639&u8fj^#f))yez
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://samsarabound.com','samsarabound.com','samsara-production.up.railway.app', 'https://samsara-production.up.railway.app', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ['https://samsara-production.up.railway.app', 'https://samsarabound.com',]
-# ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['https://samsarabound.com','samsarabound.com','samsara-production.up.railway.app', 'https://samsara-production.up.railway.app', '127.0.0.1']
+# CSRF_TRUSTED_ORIGINS = ['https://samsara-production.up.railway.app', 'https://samsarabound.com',]
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -76,17 +76,17 @@ WSGI_APPLICATION = 'Samsara.wsgi.application'
 
 DATABASES = {
     'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
 
         # Postgres on Railway DB settings
 
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['DB_NAME'],
-        'USER': os.environ['DB_USER'],
-        'PASSWORD': os.environ['DB_PASSWORD'],
-        'HOST': os.environ['DB_HOST'],
-        'PORT': os.environ['DB_PORT'],
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': os.environ['DB_NAME'],
+        # 'USER': os.environ['DB_USER'],
+        # 'PASSWORD': os.environ['DB_PASSWORD'],
+        # 'HOST': os.environ['DB_HOST'],
+        # 'PORT': os.environ['DB_PORT'],
     }
 }
 
