@@ -44,11 +44,41 @@
         <li class="nav-item">
           <a
             class="nav-link bi bi-cart"
+            id="mySidenav"
             aria-disabled="true"
-            href="{% url 'cart_summary'%}"
+            href="#menu"
           ></a>
+          <div id="mySidenav" class="sidenav">
+            <a href="#" class="closebtn">&times;</a>
+            <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Clients</a>
+            <a href="#">Contact</a>
+          </div>
         </li>
       </ul>
     </div>
   </div>
 </nav>
+<script>
+
+  // open nav 
+ $(document).on("click", "#mySidenav", function (e) {
+    e.preventDefault();
+    $(this).css("width", "250px");
+    console.log("button closed");
+    
+
+    
+  });
+
+  // close nav
+
+  $(document).on("click", ".closebtn", function (e) {
+    e.preventDefault();
+    $(this).css("width", "0px");
+    console.log("button closed");
+    
+  });
+
+</script>

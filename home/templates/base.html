@@ -59,7 +59,73 @@
       ></button>
     </div>
     <div class="page-wrapper">
-      {% endfor %} {% endif %} {% include 'navbar.html' %} {% block content %}
+      {% endfor %} {% endif %} 
+      <nav class="navbar navbar-expand-lg bg-nav navbar-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'main' %}">Samsara</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'main' %}"
+                  >Home</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home'%}">Products</a>
+              </li>
+      
+              <li class="nav-item">
+                <a
+                  class="nav-link disabled"
+                  href="#"
+                  tabindex="-1"
+                  aria-disabled="true"
+                  >Blog</a
+                >
+              </li>
+              <li class="nav-item"></li>
+                <a
+                  class="nav-link disabled"
+                  href="#"
+                  tabindex="-1"
+                  aria-disabled="true"
+                  >Community</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link bi bi-cart"
+                  aria-disabled="true"
+                  id="open-cart"
+                  href="#menu"
+                ></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div id="mySidenav" class="sidenav">
+        <a href="#" class="closebtn">&times;</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+        <a href="#">Contact</a>
+      </div>
+
+      
+     
+      {% block content %}
       {%endblock %}
 
       <!-- Footer -->
@@ -91,4 +157,24 @@
       </footer>
     </div>
   </body>
+
+  <script>
+      
+    // open nav 
+   $(document).on("click", "#open-cart", function (e) {
+      e.preventDefault();
+      $("#mySidenav").css("width", "250px");
+
+      
+      
+    });
+  
+    // close nav
+  
+    $(document).on("click", ".closebtn", function (e) {
+      e.preventDefault();
+      $("#mySidenav").css("width", "0px");
+      
+    });
+  </script>
 </html>
