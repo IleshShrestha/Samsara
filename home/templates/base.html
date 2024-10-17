@@ -48,18 +48,8 @@
     ></script>
   </head>
   <body>
-    {%if messages%} {% for message in messages%}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-      {{ message }}
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-      ></button>
-    </div>
     <div class="page-wrapper">
-      {% endfor %} {% endif %} 
+
       <nav class="navbar navbar-expand-lg bg-nav navbar-dark">
         <div class="container-fluid">
           <a class="navbar-brand" href="{% url 'main' %}">Samsara</a>
@@ -117,14 +107,23 @@
       </nav>
       <div id="mySidenav" class="sidenav">
         <a href="#" class="closebtn">&times;</a>
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Clients</a>
-        <a href="#">Contact</a>
+       {% for product in cart_prod%}
+        <img src="{{product.image.url}}" alt="..."></img>
+        <a href="#"> {{product.name}}</a>
+       {% endfor%}
       </div>
 
-      
-     
+      {%if messages%} {% for message in messages%}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+           {% endfor %} {% endif %} 
       {% block content %}
       {%endblock %}
 
