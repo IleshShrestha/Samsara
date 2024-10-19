@@ -30,10 +30,10 @@
         </div>
       </div>
       <div class="prod-price">
-        <span></span>
+        <span> ${{product.price}} </span>
       </div>
     </div>
-    <span> {{product.price}} </span>
+
     <button
       class="btn btn-outline-dark flex-shrink-0"
       type="button"
@@ -63,7 +63,7 @@
 
       success: function (json) {
         location.reload();
-        console.log("hi");
+        $("#mySidenav").css("width", "400px");
       },
 
       error: function (xhr, errmsg, err) {},
@@ -75,15 +75,18 @@
       $(".selected").removeClass("selected");
       $(this).addClass("selected");
     });
-
-    src_image = $("#change-img").attr("src");
-    hover_image = $("#change-img").data("hover");
-    $("#change-img").on("mouseover", function () {
-      $(this).attr("src", hover_image);
-    });
-    $("#change-img").on("mouseout", function () {
-      $(this).attr("src", src_image);
-    });
   });
+
+  // image hover
+
+  //   src_image = $("#change-img").attr("src");
+  //   hover_image = $("#change-img").data("hover");
+  //   $("#change-img").on("mouseover", function () {
+  //     $(this).attr("src", hover_image);
+  //   });
+  //   $("#change-img").on("mouseout", function () {
+  //     $(this).attr("src", src_image);
+  //   });
+  // });
 </script>
 {% endblock %}

@@ -3521,21 +3521,38 @@ body.is-menu-visible #menu {
   transform: translateX(0);
 }
 
-/* SIde Nav */
+.container .check-out {
+  position: absolute;
+  bottom: 20px;
+  right: 102.5px;
+  height: 3rem;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Side Nav */
 
 .sidenav {
   height: 100%;
-  width: 0;
+  width: 400px;
+  max-width: 100%;
   position: fixed;
   z-index: 1;
   top: 0;
   right: 0;
   background-color: #111;
+  color: #eee;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
+  grid-template-rows: 70px 1fr 70px;
 }
-
+.sidenav h1 {
+  padding: 20px;
+  margin: 0;
+  font-weight: 300;
+  color: #eee;
+}
 .sidenav a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
@@ -3555,6 +3572,28 @@ body.is-menu-visible #menu {
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
+}
+
+.sidenav .cart-header {
+  position: absolute;
+  top: 0;
+  left: 100px;
+  font-size: 36px;
+  margin-left: 50px;
+  margin-top: 10px;
+}
+
+.list-cart .item img {
+  width: 100%;
+}
+
+.list-cart .item {
+  display: grid;
+  grid-template-columns: auto 50%;
+  gap: 10px;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 @media screen and (max-height: 450px) {

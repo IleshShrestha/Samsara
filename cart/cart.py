@@ -15,16 +15,33 @@ class Cart():
         self.cart = cart
 
 
-    def add(self, product, quantity):
+    def add(self, product, quantity, size):
         product_id = str(product.id)
         product_qty = quantity
-        if product_id in self.cart:
-            pass
+        size = size
+        
+        
+        # comparing the id and the size to see if its in the cart
+        # {product id: [[sizes][quantites]]}
+        # if already in the cart with prod id and size pass
+        if product_id in self.cart and size in self.cart[str(product_id)][0]:
+            return False
+        
+        # want the same product but in a different size
+        elif product_id in self.cart:
+            self.cart[product_id][0].append(size)
+            self.cart[product_id][1].append(quantity)
+
+            
+        # product is not in the cart
         else:
             # self.cart[product_id] = {'price': str(product.price)}
-            self.cart[product_id] = product_qty
+            # {product id: [{xs: quant }, {s: quant}]}
+            self.cart[product_id] = [[size]]
+            self.cart[product_id].append([quantity])
 
         self.session.modified = True
+        return True
 
     def cart_total(self):
 
@@ -32,20 +49,41 @@ class Cart():
         products = Product.objects.filter(id__in=products_ids)
         quantities = self.cart
         total = 0
-        individual_totals = {}
 
+        # {prod: [[size][total_val]]}
+        individual_totals = {}
+        # {prod: [[size][quant]]}
         for product in products:
+            print(quantities)
 
             if str(product.id) in products_ids:
-                value = quantities[str(product.id)]
+                sizes = quantities[str(product.id)][0]
+                quant = quantities[str(product.id)][1]
+                # [[size], [quant]]
+                for i in range(len(sizes)):
+                    size = sizes[i]
+                    number = quant[i]
+                   
+                    if product.is_sale:
 
-                if product.is_sale:
-                    total += product.sale_price * value
-                    individual_totals[product.id] = product.sale_price * value
+                        total += product.sale_price * quant[i]
 
-                else:
-                    total += product.price * value
-                    individual_totals[product.id] = product.price * value
+                        if product.id in individual_totals.keys():
+                            individual_totals[product.id][0].append(size)
+                            individual_totals[product.id][1].append(product.sale_price * number)
+
+                        else:
+                            individual_totals[product.id] = [[size], [product.sale_price * number]]
+
+                    else:
+                        total += product.price * number
+                        if product.id in individual_totals.keys():
+                            individual_totals[product.id][0].append(size)
+                            individual_totals[product.id][1].append(product.price * number)
+
+                        else:
+                            individual_totals[product.id] = [[size], [product.price * number]]
+                            
 
         return total, individual_totals
         
@@ -62,6 +100,7 @@ class Cart():
         quantites = self.cart
         return quantites
     
+    # need to change
     def update(self, product, quantity):
 
         product_id = str(product)

@@ -44,17 +44,21 @@ def cart_add(request):
 
         # lookup product in DB
         product = get_object_or_404(Product, id=product_id)
+        cart_quantity = cart.__len__() 
 
         # Save to session
-        cart.add(product=product, quantity=product_qty)     
+        if cart.add(product=product, quantity=product_qty, size=size):
 
-        cart_quantity = cart.__len__()       
+            # Return resonse
+            response = JsonResponse({'qty': cart_quantity, 'size': size})
 
-        # Return resonse
-        response = JsonResponse({'qty': cart_quantity, 'size': size})
-        messages.success(request, "Item was added to the cart")
 
+        else:
+            messages.error(request, "Item is already in the cart")
+            response = JsonResponse({'qty': cart_quantity, 'size': size})
         return response
+
+        
 
 
 def cart_delete(request):
@@ -99,7 +103,6 @@ def create_checkout_session(request):
             else:
                 list_of_prod[product.id] = [name, int(product.price * 100), quantity]
         items = []
-        print(list_of_prod)
         for key, value in list_of_prod.items():
             items.append({
                 "price_data": {
@@ -123,7 +126,6 @@ def create_checkout_session(request):
             shipping_address_collection={"allowed_countries": ["US"]},
 
         )
-        print(session.url)
 
         return redirect(session.url, code=303)
 

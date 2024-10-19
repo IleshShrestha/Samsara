@@ -1,4 +1,5 @@
 {% load static %}
+{% load home_tags%}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -105,26 +106,68 @@
           </div>
         </div>
       </nav>
+
+
+      <!-- cart sliding menu -->
       <div id="mySidenav" class="sidenav">
-        <a href="#" class="closebtn">&times;</a>
-       {% for product in cart_prod%}
-        <img src="{{product.image.url}}" alt="..."></img>
-        <a href="#"> {{product.name}}</a>
-       {% endfor%}
+        <div class="container">
+
+          <div class="cart-header">Cart</div>
+          <a href="#" class="closebtn">&times;</a>
+
+          <!-- items in the cart code -->
+          <div class="list-cart">
+          {% for product in cart_prod %}
+            {% for key, value in cart_quant.items %}
+            <!-- key = prod id, value = [[sizes][quantities]] -->
+              {% if key == product.id|stringformat:"s" %}
+                {% for size, quant in value.0|zip:value.1%}
+                  <div class="item">
+                    <img src="{{product.image.url}}" alt="..."></img>
+                    <div class="row">
+
+                        <span href="#"> {{product.name}} ({{size}})</span>
+                        
+
+                      <span> ${{product.price}}</span>
+                      <div class="quantity">
+                        <span class="minus">-</span>
+                        <span>{{quant}}</span>
+                        <span class="plus">+</span>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+
+          {% endfor%}
+          </div>
+
+            <div class="container">
+              <button class="check-out">
+                Check Out
+              </button>
+            </div>
+        </div>
       </div>
 
-      {%if messages%} {% for message in messages%}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-      {{ message }}
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-      ></button>
-    </div>
-           {% endfor %} {% endif %} 
+      <!-- {%if messages%} {% for message in messages%}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {% endfor %} {% endif %}  -->
+      
+      
+      <!-- Start of any page that extends this page -->
       {% block content %}
+
       {%endblock %}
 
       <!-- Footer -->
@@ -162,9 +205,7 @@
     // open nav 
    $(document).on("click", "#open-cart", function (e) {
       e.preventDefault();
-      $("#mySidenav").css("width", "250px");
-
-      
+      $("#mySidenav").css("width", "400px");
       
     });
   
