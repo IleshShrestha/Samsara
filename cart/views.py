@@ -27,9 +27,6 @@ def cart_summary(request):
     # toal = #, individual = {"id": #}
     total, individual_totals = cart.cart_total()
 
-    print(total)
-    for product in cart_products:
-        print(product.id)
     return render(request, "cart_summary.html", {"cart_products": cart_products, "cart_quantities": quantities,"individual_totals": individual_totals, "total": total, "prod_ids": prod_ids})
 
 
@@ -71,7 +68,8 @@ def cart_delete(request):
         cart.delete(product = product_id, size = size)
 
         messages.success(request, ("Item was deleted from the cart!"))
-        return redirect('cart_summary')
+        response = JsonResponse({'size': size})
+        return response
 
 
 def cart_update(request):
@@ -81,7 +79,7 @@ def cart_update(request):
         product_id = int(request.POST.get('product_id'))
         product_qty = int(request.POST.get('product_qty'))
         size = str(request.POST.get('size'))
-        print(product_id, product_qty, size)
+
         cart.update(product = product_id, quantity = product_qty, size = size)
         messages.success(request, ("Your cart has been updated!"))
         response = JsonResponse({'qty': product_qty, 'size': size})
@@ -96,7 +94,7 @@ def cart_update(request):
             response = JsonResponse({'qty': product_qty, 'size': size})
             return response
        
-        print(product_id, product_qty, size)
+
         cart.update(product = product_id, quantity = product_qty, size = size)
         messages.success(request, ("Your cart has been updated!"))
         response = JsonResponse({'qty': product_qty, 'size': size})
@@ -110,32 +108,44 @@ def create_checkout_session(request):
         
         cart = Cart(request)
 
-        cart_quant = cart.get_quants()
-        cart_products, prod_ids = cart.get_prods()
+        cart_prods = cart.get_quants()
+        list_of_prod = {}
+        for key, value in cart_prods.items():
+            product = Product.objects.get(id=key)
+            for i in range(len(value[1])):
+
+
         # cart_quant { prod_id : [size] [quant]} cart_prods{[prod objects]}
         # {'product': product price} 
-        list_of_prod = {}
-        for product in cart_products:
-
-            quantity = cart_quant[str(product.pk)]
-            name = product.name
-            if product.is_sale:
-                list_of_prod[product.id] = [name, int(product.sale_price * 100), quantity ]
-            else:
-                list_of_prod[product.id] = [name, int(product.price * 100), quantity]
+                size = value[0][i]
+                quant = value[1][i]
+                name = product.name
+                if product.id in list_of_prod:
+                    if product.is_sale:
+                        list_of_prod[product.id].append([name, int(product.sale_price * 100), quant, size] )
+                    
+                    else:
+                        list_of_prod[product.id].append([name, int(product.price * 100), quant, size] )
+                else:
+                    if product.is_sale:
+                        list_of_prod[product.id] = [[name, int(product.sale_price * 100), quant, size ]]
+                    else:
+                        list_of_prod[product.id] = [[name, int(product.price * 100), quant, size]]
         items = []
-        print(list_of_prod)
+
+
         for key, value in list_of_prod.items():
-            items.append({
-                "price_data": {
-                    "currency": "usd",
-                    "unit_amount": value[1],
-                    "product_data":{
-                        "name": value[0]
+            for info in value:
+                items.append({
+                    "price_data": {
+                        "currency": "usd",
+                        "unit_amount": info[1],
+                        "product_data":{
+                            "name": info[0] +" " + info[3]
+                        },
                     },
-                },
-                "quantity": value[2]
-                }) 
+                    "quantity": info[2]
+                    }) 
     
         session = stripe.checkout.Session.create(
             payment_method_types=["card"],
@@ -143,7 +153,6 @@ def create_checkout_session(request):
             mode="payment",
             success_url= request.build_absolute_uri(reverse("success")),
             cancel_url=request.build_absolute_uri(reverse("cancel")),
-            metadata={"product_ids": cart_quant.keys(), "user_id": request.user.id},
             automatic_tax={'enabled': True},
             shipping_address_collection={"allowed_countries": ["US"]},
 

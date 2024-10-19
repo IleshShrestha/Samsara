@@ -68,7 +68,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'main' %}"
+                <a class="nav-link" aria-current="page" href="{% url 'main' %}"
                   >Home</a
                 >
               </li>
@@ -126,7 +126,10 @@
                     <img src="{{product.image.url}}" alt="..."></img>
                     <div class="row">
                       <span href="#" class="size" > {{product.name}} ({{size}})</span>
-                      <span> ${{product.price}}</span>
+                      <span> ${{product.price}}</span> 
+                      {% with val="8*8" %}
+                        {{val}}
+                      {% endwith %}
                       <div class="quantity">
                         <span class="minus minus-quant" data-index="{{product.id}}" data-quantity="{{quant}}"data-size="{{size}}">-</span>
                         <span class="item-quantity ">{{quant}}</span>
@@ -138,13 +141,11 @@
                 {% endfor %}
               {% endif %}
             {% endfor %}
-
           {% endfor%}
           </div>
-
             <div class="container">
-              <a href="{% url 'cart_summary'%}"><button class="check-out">
-                Check Out
+              <a href="{% url 'create_checkout_session'%}"><button class="check-out">
+                Check Out ${{cart_total.0}}
               </button></a>
             </div>
         </div>
@@ -192,6 +193,18 @@
             <a href="{% url 'contact' %}" class="icon solid fa-envelope"
               ><span class="label">Email</span></a
             >
+          </li>
+        </ul>
+        <ul class="icons">
+          <li>
+            <a class="icon solid" href="{% url 'privacy_policy'%}">
+              Privacy Policy
+            </a>
+          </li>
+          <li >
+            <a class = "icon solid"href="{% url 'shipping_policy'%}">
+              Shipping Policy
+            </a>
           </li>
         </ul>
       </footer>
@@ -267,6 +280,7 @@
     });
   });
 
+  // subtract an item
   $(document).on("click", ".minus-quant", function (e) {
     var productid = $(this).data("index");
     var product_quant = $(this).data("quantity");

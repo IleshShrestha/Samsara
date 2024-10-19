@@ -17,6 +17,12 @@ def community(request):
 def stores(request):
 
     return render(request, 'stores.html', {})
+def privacy(request):
+
+    return render(request, 'privacy_policy.html', {})
+def shipping(request):
+
+    return render(request, 'shipping_policy.html', {})
 
 def contact(request):
     if request.method == "POST":
