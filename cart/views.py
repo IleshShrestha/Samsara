@@ -20,6 +20,8 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 def cart_summary(request):
 
     cart = Cart(request)
+
+    #{prod: [size][quant]}
     quantities = cart.get_quants()
     cart_products, prod_ids = cart.get_prods()
     # toal = #, individual = {"id": #}
@@ -65,7 +67,8 @@ def cart_delete(request):
     cart = Cart(request)
     if request.POST.get('action') == 'post':
         product_id = int(request.POST.get('product_id'))
-        cart.delete(product = product_id)
+        size = request.POST.get('size')
+        cart.delete(product = product_id, size = size)
 
         messages.success(request, ("Item was deleted from the cart!"))
         return redirect('cart_summary')
@@ -73,25 +76,43 @@ def cart_delete(request):
 
 def cart_update(request):
     cart = Cart(request)
-    if request.POST.get('action') == 'post':
+    type_of_request = str(request.POST.get("type"))
+    if request.POST.get('action') == 'post' and type_of_request == "+":
         product_id = int(request.POST.get('product_id'))
         product_qty = int(request.POST.get('product_qty'))
-        print("info")
-        print(product_id, product_qty)
-        cart.update(product = product_id, quantity = product_qty)
+        size = str(request.POST.get('size'))
+        print(product_id, product_qty, size)
+        cart.update(product = product_id, quantity = product_qty, size = size)
         messages.success(request, ("Your cart has been updated!"))
-        return redirect('cart_summary')
+        response = JsonResponse({'qty': product_qty, 'size': size})
+        return response
+    
+
+    elif request.POST.get('action') == 'post' and type_of_request == "-":
+        product_id = int(request.POST.get('product_id'))
+        product_qty = int(request.POST.get('product_qty'))
+        size = str(request.POST.get('size'))
+        if product_qty == 0:
+            response = JsonResponse({'qty': product_qty, 'size': size})
+            return response
+       
+        print(product_id, product_qty, size)
+        cart.update(product = product_id, quantity = product_qty, size = size)
+        messages.success(request, ("Your cart has been updated!"))
+        response = JsonResponse({'qty': product_qty, 'size': size})
+        return response
+    else:
+        pass
 
 # under dev for multiple porducts in cart    
 def create_checkout_session(request):
     # if request.method == "POST":
-        # {'item id' : quantity} from ajax
+        
         cart = Cart(request)
 
         cart_quant = cart.get_quants()
         cart_products, prod_ids = cart.get_prods()
-        # cart_quant { prod_id : quant, ....} cart_prods{[prod objects]}
-        print(f"cart quants {cart_quant} and cart protds {cart_products[0].name}")
+        # cart_quant { prod_id : [size] [quant]} cart_prods{[prod objects]}
         # {'product': product price} 
         list_of_prod = {}
         for product in cart_products:
@@ -103,6 +124,7 @@ def create_checkout_session(request):
             else:
                 list_of_prod[product.id] = [name, int(product.price * 100), quantity]
         items = []
+        print(list_of_prod)
         for key, value in list_of_prod.items():
             items.append({
                 "price_data": {

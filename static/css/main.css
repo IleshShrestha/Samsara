@@ -3534,7 +3534,7 @@ body.is-menu-visible #menu {
 
 .sidenav {
   height: 100%;
-  width: 400px;
+  width: 0px;
   max-width: 100%;
   position: fixed;
   z-index: 1;
@@ -3554,9 +3554,9 @@ body.is-menu-visible #menu {
   color: #eee;
 }
 .sidenav a {
-  padding: 8px 8px 8px 32px;
+  padding: 8px 8px 8px 8;
   text-decoration: none;
-  font-size: 25px;
+  font-size: 20px;
   color: #818181;
   display: block;
   transition: 0.3s;
@@ -3582,7 +3582,12 @@ body.is-menu-visible #menu {
   margin-left: 50px;
   margin-top: 10px;
 }
-
+.list-cart {
+  overflow-x: auto;
+}
+.list-cart::-webkit-scrollbar {
+  width: 0;
+}
 .list-cart .item img {
   width: 100%;
 }
@@ -3596,6 +3601,32 @@ body.is-menu-visible #menu {
   margin-bottom: 20px;
 }
 
+.list-cart .item .row span {
+  margin-bottom: 10px;
+}
+.list-cart .item .quantity span {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background-color: #eee;
+  color: #000;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.list-cart .item .quantity a {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background-color: #eee;
+  color: #000;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.list-cart .item .quantity span:nth-child(2) {
+  background-color: transparent;
+  color: #fff;
+}
 @media screen and (max-height: 450px) {
   .sidenav {
     padding-top: 15px;

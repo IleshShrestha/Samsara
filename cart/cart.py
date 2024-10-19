@@ -54,8 +54,6 @@ class Cart():
         individual_totals = {}
         # {prod: [[size][quant]]}
         for product in products:
-            print(quantities)
-
             if str(product.id) in products_ids:
                 sizes = quantities[str(product.id)][0]
                 quant = quantities[str(product.id)][1]
@@ -101,23 +99,32 @@ class Cart():
         return quantites
     
     # need to change
-    def update(self, product, quantity):
+    def update(self, product, quantity, size):
 
         product_id = str(product)
         product_qty = int(quantity)
+        size = size
         
         oldcart = self.cart
 
-        oldcart[product_id] = product_qty
+        #{ prod: [size][quant]}
+        index = oldcart[product_id][0].index(size)
+        oldcart[product_id][1][index] = product_qty
 
         self.session.modified = True
         newcart = self.cart
         return newcart
     
-    def delete(self, product):
+    def delete(self, product, size):
         
         product_id = str(product)
-        if product_id in self.cart:
-            del self.cart[product_id]
+        size = size
+
+        # {prod id: [sizes] [quants]}
+        # need to make o(1)
+        if product_id in self.cart and size in self.cart[product_id][0]:
+            index = self.cart[product_id][0].index(size)
+            del self.cart[product_id][0][index]
+            del self.cart[product_id][1][index]
 
         self.session.modified = True

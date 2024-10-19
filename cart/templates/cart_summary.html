@@ -11,7 +11,11 @@
             >
             <h5>Items in your cart</h5>
           </div>
-          {% for product in cart_products %}
+          {% for product in cart_prod %} {% for key, value in cart_quant.items
+          %}
+          <!-- key = prod id, value = [[sizes][quantities]] -->
+          {% if key == product.id|stringformat:"s" %} {% for size, quant in
+          value.0|zip:value.1%}
           <div class="ibox-content">
             <div class="table-responsive">
               <table class="table shoping-cart-table">
@@ -35,7 +39,7 @@
                       <div class="m-t-sm">
                         <a
                           href="#"
-                          class="text-muted cart-del"
+                          class="text-muted cart-del-summary"
                           data-index="{{product.id}}"
                           ><i class="fa fa-trash"></i> Remove item</a
                         >
@@ -50,8 +54,7 @@
                     {% else %}
                     <td>${{product.price}}</td>
 
-                    {% endif%} {% for key, value in cart_quantities.items %}
-                    {%if key == product.id|slugify %}
+                    {% endif%}
                     <td width="65">
                       <input
                         type="text"
@@ -61,16 +64,12 @@
                         data-index="{{product.id}}"
                       />
                     </td>
-                    <!-- <td>
-                      <h4>{{individual_totals.}}</h4>
-                    </td> -->
-                    {% endif %} {% endfor %}
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
-          {% endfor %}
+          {% endfor %} {%endif%} {%endfor%} {%endfor%}
           <div class="ibox-content">
             <button class="btn btn-primary pull-right">
               <i class="fa fa fa-shopping-cart"></i> Checkout
@@ -117,7 +116,6 @@
     var productid = $(this).data("index");
 
     e.preventDefault();
-    console.log("sending data");
     $.ajax({
       type: "GET",
       url: "{% url 'cart_update' %}",
@@ -139,7 +137,7 @@
 
   // delete item from the cart
 
-  $(document).on("click", ".cart-del", function (e) {
+  $(document).on("click", ".cart-del-summary", function (e) {
     var productid = $(this).data("index");
 
     e.preventDefault();

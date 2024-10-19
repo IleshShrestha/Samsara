@@ -8,4 +8,5 @@ def cart(request):
     print(cart_quant)
     print(cart_total)
 
+
     return {'cart': cart, 'cart_prod': cart_prod, 'cart_quant': cart_quant, 'cart_total': cart_total}

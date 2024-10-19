@@ -144,6 +144,7 @@ table.shoping-cart-table tr td:first-child {
 table.shoping-cart-table tr td:last-child {
   width: 80px;
 }
+
 .ibox {
   clear: both;
   margin-bottom: 25px;
@@ -307,7 +308,7 @@ table.shoping-cart-table tr td:last-child {
 }
 
 .product-price span {
-  font-size: 26px;
+  font-size: 30px;
   font-weight: 300;
   color: #43474d;
   margin-right: 20px;

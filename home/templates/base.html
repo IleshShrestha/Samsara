@@ -122,19 +122,17 @@
             <!-- key = prod id, value = [[sizes][quantities]] -->
               {% if key == product.id|stringformat:"s" %}
                 {% for size, quant in value.0|zip:value.1%}
-                  <div class="item">
+                  <div class="item" id="side-cart{{product.id}}" >
                     <img src="{{product.image.url}}" alt="..."></img>
                     <div class="row">
-
-                        <span href="#"> {{product.name}} ({{size}})</span>
-                        
-
+                      <span href="#" class="size" > {{product.name}} ({{size}})</span>
                       <span> ${{product.price}}</span>
                       <div class="quantity">
-                        <span class="minus">-</span>
-                        <span>{{quant}}</span>
-                        <span class="plus">+</span>
+                        <span class="minus minus-quant" data-index="{{product.id}}" data-quantity="{{quant}}"data-size="{{size}}">-</span>
+                        <span class="item-quantity ">{{quant}}</span>
+                        <span class="plus add-quant" data-index="{{product.id}}" data-quantity="{{quant}}"data-size="{{size}}">+</span>
                       </div>
+                      <a href="#" data-index="{{product.id}}" data-size="{{size}}" class="cart-del-side">Remove</a>
                     </div>
                   </div>
                 {% endfor %}
@@ -145,9 +143,9 @@
           </div>
 
             <div class="container">
-              <button class="check-out">
+              <a href="{% url 'cart_summary'%}"><button class="check-out">
                 Check Out
-              </button>
+              </button></a>
             </div>
         </div>
       </div>
@@ -216,5 +214,85 @@
       $("#mySidenav").css("width", "0px");
       
     });
+
+    // remove item from side cart
+    $(document).on("click", ".cart-del-side", function (e) {
+    var productid = $(this).data("index");
+    var size = $(this).data("size");
+
+    e.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: "{% url 'cart_delete' %}",
+      data: {
+        product_id: productid,
+        size: size,
+        csrfmiddlewaretoken: "{{csrf_token}}",
+        action: "post",
+      },
+
+      success: function (json) {
+        location.reload();
+      },
+
+      error: function (xhr, errmsg, err) {},
+    });
+  });
+
+  // add quant to side cart item
+  $(document).on("click", ".add-quant", function (e) {
+    var productid = $(this).data("index");
+    var product_quant = $(this).data("quantity");
+    var size = $(this).data("size");
+    var type = "+"
+    console.log(product_quant)
+    e.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: "{% url 'cart_update' %}",
+      data: {
+        product_id: productid,
+        size: size,
+        product_qty: product_quant + 1,
+        type: type,
+        csrfmiddlewaretoken: "{{csrf_token}}",
+        action: "post",
+      },
+
+      success: function (json) {
+        location.reload();
+      },
+
+      error: function (xhr, errmsg, err) {},
+    });
+  });
+
+  $(document).on("click", ".minus-quant", function (e) {
+    var productid = $(this).data("index");
+    var product_quant = $(this).data("quantity");
+    var size = $(this).data("size");
+    var type = "-"
+    e.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: "{% url 'cart_update' %}",
+      data: {
+        product_id: productid,
+        size: size,
+        product_qty: product_quant - 1,
+        type: type,
+        csrfmiddlewaretoken: "{{csrf_token}}",
+        action: "post",
+      },
+
+      success: function (json) {
+        location.reload();
+      },
+
+      error: function (xhr, errmsg, err) {},
+    });
+  });
+
+</script>
   </script>
 </html>
