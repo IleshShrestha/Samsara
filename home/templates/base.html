@@ -127,9 +127,6 @@
                     <div class="row">
                       <span href="#" class="size" > {{product.name}} ({{size}})</span>
                       <span> ${{product.price}}</span> 
-                      {% with val="8*8" %}
-                        {{val}}
-                      {% endwith %}
                       <div class="quantity">
                         <span class="minus minus-quant" data-index="{{product.id}}" data-quantity="{{quant}}"data-size="{{size}}">-</span>
                         <span class="item-quantity ">{{quant}}</span>
