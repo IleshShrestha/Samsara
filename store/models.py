@@ -29,7 +29,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     description = models.CharField(max_length=250, default='', null=True, blank=True)
     image = models.ImageField(upload_to='uploads/product')
-    binary = models.BinaryField()
+
     
     # Sales Stuff
     is_sale = models.BooleanField(default=False)
