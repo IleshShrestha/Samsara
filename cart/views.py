@@ -109,6 +109,7 @@ def create_checkout_session(request):
         cart = Cart(request)
 
         cart_prods = cart.get_quants()
+        print(cart_prods)
         list_of_prod = {}
         for key, value in cart_prods.items():
             product = Product.objects.get(id=key)
@@ -182,7 +183,7 @@ def stripe_webhook(request):
 
 
 def cancel(request):
-    return redirect("cart_summary")
+    return redirect("main")
 
 def success(request):
     return redirect("main")
