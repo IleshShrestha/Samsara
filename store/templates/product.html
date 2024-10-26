@@ -10,8 +10,8 @@
     <!-- product description -->
     <div class="description">
       <span>T-Shirt</span>
-      <h1>Samsara T-Shirt</h1>
-      <p></p>
+      <h1>{{product.name}}</h1>
+      <p>{{product.description}}</p>
       <h4>Size:</h4>
     </div>
     <div class="prod-config">
@@ -45,6 +45,11 @@
 </div>
 
 <script>
+  $(document).ready(function () {
+    // Code to execute after the page has fully loaded
+    console.log("Page has loaded!");
+  });
+
   // adding an item to the cart
   $(document).on("click", "#add-cart", function (e) {
     e.preventDefault();
@@ -60,13 +65,16 @@
       },
 
       success: function (json) {
-        location.reload();
-        $("#mySidenav").css("width", "400px");
+        window.location.href = window.location.href;
+
+        console.log($("#mySidenav").css("width") == "0px");
       },
 
       error: function (xhr, errmsg, err) {},
     });
   });
+
+  // changes the button selected
 
   $(document).ready(function () {
     $(".prod-size button").on("click", function () {
