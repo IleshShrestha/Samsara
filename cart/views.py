@@ -149,13 +149,30 @@ def create_checkout_session(request):
                     }) 
     
         session = stripe.checkout.Session.create(
+            shipping_address_collection={"allowed_countries": ["US"]},
+            shipping_options=[
+                {
+                    "shipping_rate_data":{
+                        "type":"fixed_amount",
+                        "fixed_amount": {"amount": 499, "currency": "usd"},
+                        "display_name": "Shipping Costs",
+                        "delivery_estimate": {
+                        "minimum": {"unit": "business_day", "value": 3},
+                        "maximum": {"unit": "business_day", "value": 5},
+                        },
+                    }
+
+                }
+
+            ],
             payment_method_types=["card"],
             line_items=items,
             mode="payment",
             success_url= request.build_absolute_uri(reverse("success")),
             cancel_url=request.build_absolute_uri(reverse("cancel")),
             automatic_tax={'enabled': True},
-            shipping_address_collection={"allowed_countries": ["US"]},
+            
+           
 
         )
 
