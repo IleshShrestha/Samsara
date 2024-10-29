@@ -158,7 +158,7 @@ def create_checkout_session(request):
                 {
                     "shipping_rate_data":{
                         "type":"fixed_amount",
-                        "fixed_amount": {"amount": 499, "currency": "usd"},
+                        "fixed_amount": {"amount": 599, "currency": "usd"},
                         "display_name": "Shipping Costs",
                         "delivery_estimate": {
                         "minimum": {"unit": "business_day", "value": 3},
