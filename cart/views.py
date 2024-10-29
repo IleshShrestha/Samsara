@@ -14,7 +14,7 @@ import time
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
-print(settings.STRIPE_SECRET_KEY)
+
 
 
 
