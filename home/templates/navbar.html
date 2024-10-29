@@ -61,12 +61,14 @@
   </div>
 </nav>
 <script>
-
+$(document).ready(function(e){
+  e.preventDefault();
   // open nav 
  $(document).on("click", "#mySidenav", function (e) {
     e.preventDefault();
     $(this).css("width", "250px");
-    console.log("button closed");
+    console.log("button open");
+    localStorage.setItem("seen", "seen")
     
 
     
@@ -78,7 +80,12 @@
     e.preventDefault();
     $(this).css("width", "0px");
     console.log("button closed");
+    localStorage.setItem("seen", "not_seen")
     
   });
+
+
+});
+
 
 </script>

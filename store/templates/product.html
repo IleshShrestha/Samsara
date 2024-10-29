@@ -31,30 +31,30 @@
         <span> ${{product.price}} </span>
       </div>
     </div>
-
-    <button
-      class="btn btn-outline-dark flex-shrink-0"
-      type="button"
-      value="{{product.id}}"
-      id="add-cart"
-    >
-      <i class="bi-cart-fill me-1"></i>
-      Add to cart
-    </button>
+    <a href="{% url 'create_checkout_session'%}">
+      <button
+        class="btn btn-outline-dark flex-shrink-0"
+        type="button"
+        value="{{product.id}}"
+        id="add-cart"
+      >
+        <i class="bi-cart-fill me-1"></i>
+        Add to cart
+      </button>
+    </a>
   </div>
 </div>
 
 <script>
   $(document).ready(function () {
-    // let seen = localStorage.getItem('seen');
-    // if (!seen){
-    //   seen = 'not_seen';
-    //   localStorage.setItem('seen', 'not_seen')
-    // }
-    // if (seen == "seen"){
-    //   $("#mySidenav").css("width", )
-
-    // }
+    let seen = localStorage.getItem("seen");
+    if (!seen) {
+      seen = "not_seen";
+      localStorage.setItem("seen", "not_seen");
+    }
+    if (seen == "seen") {
+      $("#mySidenav").css("width", "400px");
+    }
     // Code to execute after the page has fully loaded
     console.log("Page has loaded!");
   });
@@ -74,7 +74,7 @@
       },
 
       success: function (json) {
-        window.location.href = window.location.href;
+        // window.location.href = window.location.href;
 
         console.log($("#mySidenav").css("width") == "0px");
       },
