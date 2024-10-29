@@ -16,7 +16,7 @@ SECRET_KEY = 'django-insecure-_lsr)o4c-kxuqxnxl^6qeznsr76nxs0i)3639&u8fj^#f))yez
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['https://samsarabound.com','samsarabound.com','samsara-production.up.railway.app', 'https://samsara-production.up.railway.app', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['https://samsara-production.up.railway.app', 'https://samsarabound.com',]

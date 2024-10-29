@@ -14,6 +14,7 @@ import time
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+print(settings.STRIPE_SECRET_KEY)
 
 
 
@@ -55,6 +56,8 @@ def cart_add(request):
         else:
             messages.error(request, "Item is already in the cart")
             response = JsonResponse({'qty': cart_quantity, 'size': size})
+
+        
         return response
 
         
@@ -109,6 +112,7 @@ def create_checkout_session(request):
         cart = Cart(request)
 
         cart_prods = cart.get_quants()
+        print("hi")
         print(cart_prods)
         list_of_prod = {}
         for key, value in cart_prods.items():
