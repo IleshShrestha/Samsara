@@ -1,0 +1,98 @@
+{% extends 'base.html' %} {% block content %} {% load static%}
+<div class="product-container">
+  <!-- left side image -->
+  <div class="left-picture">
+    <img src="{{product.image.url}}" />
+  </div>
+
+  <!-- right side stuff -->
+  <div class="right-side">
+    <!-- product description -->
+    <div class="description">
+      <span>T-Shirt</span>
+      <h1>{{product.name}}</h1>
+      <p>{{product.description}}</p>
+      <h4>Size:</h4>
+    </div>
+    <div class="prod-config">
+      <!-- product size -->
+      <div class="prod-size">
+        <div>
+          <button class="selected" value="S">S</button>
+
+          <button value="M">M</button>
+
+          <button value="L">L</button>
+
+          <button value="XL">XL</button>
+        </div>
+      </div>
+      <div class="prod-price">
+        <span> ${{product.price}} </span>
+      </div>
+    </div>
+
+    <button
+      class="btn btn-outline-dark flex-shrink-0"
+      type="button"
+      value="{{product.id}}"
+      id="add-cart"
+    >
+      <i class="bi-cart-fill me-1"></i>
+      Add to cart
+    </button>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    // Code to execute after the page has fully loaded
+    console.log("Page has loaded!");
+  });
+
+  // adding an item to the cart
+  $(document).on("click", "#add-cart", function (e) {
+    e.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: "{% url 'cart_add' %}",
+      data: {
+        product_id: $("#add-cart").val(),
+        product_qty: "1",
+        size: $(".selected").val(),
+        csrfmiddlewaretoken: "{{csrf_token}}",
+        action: "post",
+      },
+
+      success: function (json) {
+        window.location.href = window.location.href;
+
+        console.log($("#mySidenav").css("width") == "0px");
+      },
+
+      error: function (xhr, errmsg, err) {},
+    });
+  });
+
+  // changes the button selected
+
+  $(document).ready(function () {
+    $(".prod-size button").on("click", function () {
+      $(".selected").removeClass("selected");
+      $(this).addClass("selected");
+    });
+  });
+
+  // image hover
+
+  //   src_image = $("#change-img").attr("src");
+  //   hover_image = $("#change-img").data("hover");
+  //   $("#change-img").on("mouseover", function () {
+  //     $(this).attr("src", hover_image);
+  //   });
+  //   $("#change-img").on("mouseout", function () {
+  //     $(this).attr("src", src_image);
+  //   });
+  // });
+</script>
+{% endblock %}

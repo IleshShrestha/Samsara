@@ -195,7 +195,15 @@ table.shoping-cart-table tr td:last-child {
   margin: 0 auto;
   padding: 15px;
   display: flex;
+  position: relative;
 }
+
+@media screen and (max-width: 992px) {
+  .product-container {
+    flex-direction: column;
+  }
+}
+
 .left-picture {
   width: 65%;
   position: relative;
