@@ -31,17 +31,16 @@
         <span> ${{product.price}} </span>
       </div>
     </div>
-    <a href="{% url 'create_checkout_session'%}">
-      <button
-        class="btn btn-outline-dark flex-shrink-0"
-        type="button"
-        value="{{product.id}}"
-        id="add-cart"
-      >
-        <i class="bi-cart-fill me-1"></i>
-        Add to cart
-      </button>
-    </a>
+
+    <button
+      class="btn btn-outline-dark flex-shrink-0"
+      type="button"
+      value="{{product.id}}"
+      id="add-cart"
+    >
+      <i class="bi-cart-fill me-1"></i>
+      Add to cart
+    </button>
   </div>
 </div>
 
