@@ -195,28 +195,11 @@ table.shoping-cart-table tr td:last-child {
   margin: 0 auto;
   padding: 15px;
   display: flex;
-  position: relative;
-}
-
-@media screen and (max-width: 992px) {
-  .product-container {
-    flex-direction: column;
-  }
 }
 
 .left-picture {
   width: 65%;
   position: relative;
-}
-
-.left-picture img {
-  width: 95%;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  transition: all 0.3s ease;
-  height: 100%;
 }
 
 .right-side {
@@ -227,6 +210,33 @@ table.shoping-cart-table tr td:last-child {
 
 .right-side span {
   margin-right: 5px;
+}
+
+@media screen and (max-width: 992px) {
+  .product-container {
+    flex-direction: column;
+  }
+  .left-picture {
+    width: 90vw;
+    height: 90vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .right-side {
+    width: 75%;
+    margin-left: 10vw;
+    margin-right: 10vw;
+  }
+}
+
+.left-picture img {
+  width: 95%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  transition: all 0.3s ease;
+  height: 100%;
 }
 
 .description {
