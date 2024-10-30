@@ -1,4 +1,9 @@
-{% extends 'base.html' %} {% block content %} {% load static%}
+{% extends 'base.html' %} {% block content %} {% load static%} 
+{% for message in messages%}
+<div class="alert alert-success">
+  <strong>Success!</strong> You added an item to your cart!
+</div>
+{%endfor%}
 <div class="product-container">
   <!-- left side image -->
   <div class="left-picture">
@@ -73,7 +78,7 @@
       },
 
       success: function (json) {
-        // window.location.href = window.location.href;
+        window.location.href = window.location.href;
 
         console.log($("#mySidenav").css("width") == "0px");
       },

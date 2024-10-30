@@ -57,7 +57,7 @@ def cart_add(request):
             messages.error(request, "Item is already in the cart")
             response = JsonResponse({'qty': cart_quantity, 'size': size})
 
-        
+        messages.success(request, ("Item was added to the cart!"))
         return response
 
         
