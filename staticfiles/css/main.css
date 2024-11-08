@@ -3887,10 +3887,15 @@ body.is-preload #banner:after {
 #footer .icons {
   font-size: 1.25em;
 }
+#footer .icons span{
+  color: rgba(255, 255, 255, 0.4);
+
+}
 
 #footer .icons a {
   color: rgba(255, 255, 255, 0.4);
 }
+
 
 #footer .icons a:hover {
   color: #000;

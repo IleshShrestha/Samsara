@@ -175,7 +175,7 @@ def create_checkout_session(request):
             success_url= request.build_absolute_uri(reverse("success")),
             cancel_url=request.build_absolute_uri(reverse("cancel")),
             automatic_tax={'enabled': True},
-            
+            phone_number_collection={"enabled": True},
            
 
         )
