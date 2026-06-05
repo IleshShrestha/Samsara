@@ -1,111 +1,137 @@
-{% extends 'base.html' %} {% block content %} {% load static%} 
-{% for message in messages%}
-<div class="alert alert-success">
-  <strong>Success!</strong> You added an item to your cart!
-</div>
-{%endfor%}
-<div class="product-container">
-  <!-- left side image -->
-  <div class="left-picture">
-    <img src="{{product.image.url}}" />
-  </div>
+{% extends 'base.html' %}
 
-  <!-- right side stuff -->
-  <div class="right-side">
-    <!-- product description -->
-    <div class="description">
-      <span>T-Shirt</span>
-      <h1>{{product.name}}</h1>
-      <p>{{product.description}}</p>
-      <h4>Size:</h4>
+{% block title %}{{ product.name }} | Samsara{% endblock %}
+
+{% block content %}
+  {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+        <div class="message">{{ message }}</div>
+      {% endfor %}
     </div>
-    <div class="prod-config">
-      <!-- product size -->
-      <div class="prod-size">
-        <div>
-          <button class="selected" value="S">S</button>
+  {% endif %}
 
-          <button value="M">M</button>
+  <section class="page-section">
+    <div class="section-inner">
+      <a class="back-link" href="{% url 'home' %}">Back to shop</a>
 
-          <button value="L">L</button>
+      <div class="product-detail">
+        <div class="product-detail__media">
+          {% if product.is_sale %}
+            <span class="badge">Sale</span>
+          {% endif %}
+          <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+        </div>
 
-          <button value="XL">XL</button>
+        <div class="product-detail__info">
+          <p class="eyebrow">{{ product.category }}</p>
+          <h1>{{ product.name }}</h1>
+          <p class="product-detail__price">
+            {% if product.is_sale %}
+              ${{ product.sale_price }} <s class="muted">${{ product.price }}</s>
+            {% else %}
+              ${{ product.price }}
+            {% endif %}
+          </p>
+
+          <p class="product-detail__description">{{ product.description }}</p>
+
+          <div class="option-group">
+            <div class="option-row">
+              <span class="option-label">Size</span>
+              <span class="muted">Standard fit</span>
+            </div>
+            <div class="size-grid prod-size" aria-label="Select size">
+              <button class="size-button selected" type="button" value="S">S</button>
+              <button class="size-button" type="button" value="M">M</button>
+              <button class="size-button" type="button" value="L">L</button>
+              <button class="size-button" type="button" value="XL">XL</button>
+              <button class="size-button" type="button" value="XXL">XXL</button>
+            </div>
+          </div>
+
+          <div class="option-group">
+            <span class="option-label">Quantity</span>
+            <div class="quantity-control" aria-label="Select quantity">
+              <button class="quantity-step" type="button" data-step="-1">-</button>
+              <input id="product-quantity" type="number" min="1" value="1" inputmode="numeric" />
+              <button class="quantity-step" type="button" data-step="1">+</button>
+            </div>
+          </div>
+
+          <button
+            class="add-cart-button"
+            type="button"
+            value="{{ product.id }}"
+            id="add-cart"
+          >
+            Add to cart - 
+            {% if product.is_sale %}
+              ${{ product.sale_price }}
+            {% else %}
+              ${{ product.price }}
+            {% endif %}
+          </button>
+
+          <div class="detail-list">
+            <h2>Product details</h2>
+            <ul>
+              <li>Boxy streetwear silhouette designed for everyday wear.</li>
+              <li>Made for layering across seasons.</li>
+              <li>Ships with size and quantity preserved in checkout.</li>
+            </ul>
+          </div>
         </div>
       </div>
-      <div class="prod-price">
-        <span> ${{product.price}} </span>
-      </div>
     </div>
+  </section>
+{% endblock %}
 
-    <button
-      class="btn btn-outline-dark flex-shrink-0"
-      type="button"
-      value="{{product.id}}"
-      id="add-cart"
-    >
-      <i class="bi-cart-fill me-1"></i>
-      Add to cart
-    </button>
-  </div>
-</div>
+{% block extra_scripts %}
+  <script>
+    (function ($) {
+      if (!$) return;
 
-<script>
-  $(document).ready(function () {
-    let seen = localStorage.getItem("seen");
-    if (!seen) {
-      seen = "not_seen";
-      localStorage.setItem("seen", "not_seen");
-    }
-    if (seen == "seen") {
-      $("#mySidenav").css("width", "400px");
-    }
-    // Code to execute after the page has fully loaded
-    console.log("Page has loaded!");
-  });
+      function normalizedQuantity() {
+        var quantity = parseInt($("#product-quantity").val(), 10);
+        if (!quantity || quantity < 1) quantity = 1;
+        $("#product-quantity").val(quantity);
+        return quantity;
+      }
 
-  // adding an item to the cart
-  $(document).on("click", "#add-cart", function (e) {
-    e.preventDefault();
-    $.ajax({
-      type: "POST",
-      url: "{% url 'cart_add' %}",
-      data: {
-        product_id: $("#add-cart").val(),
-        product_qty: "1",
-        size: $(".selected").val(),
-        csrfmiddlewaretoken: "{{csrf_token}}",
-        action: "post",
-      },
+      $(document).on("click", ".prod-size button", function () {
+        $(".prod-size button").removeClass("selected");
+        $(this).addClass("selected");
+      });
 
-      success: function (json) {
-        window.location.href = window.location.href;
+      $(document).on("click", ".quantity-step", function () {
+        var step = parseInt($(this).data("step"), 10);
+        var nextQuantity = normalizedQuantity() + step;
+        $("#product-quantity").val(Math.max(1, nextQuantity));
+      });
 
-        console.log($("#mySidenav").css("width") == "0px");
-      },
+      $(document).on("change", "#product-quantity", normalizedQuantity);
 
-      error: function (xhr, errmsg, err) {},
-    });
-  });
+      $(document).on("click", "#add-cart", function (e) {
+        e.preventDefault();
 
-  // changes the button selected
-
-  $(document).ready(function () {
-    $(".prod-size button").on("click", function () {
-      $(".selected").removeClass("selected");
-      $(this).addClass("selected");
-    });
-  });
-
-  // image hover
-
-  //   src_image = $("#change-img").attr("src");
-  //   hover_image = $("#change-img").data("hover");
-  //   $("#change-img").on("mouseover", function () {
-  //     $(this).attr("src", hover_image);
-  //   });
-  //   $("#change-img").on("mouseout", function () {
-  //     $(this).attr("src", src_image);
-  //   });
-  // });
-</script>
+        $.ajax({
+          type: "POST",
+          url: "{% url 'cart_add' %}",
+          data: {
+            product_id: $("#add-cart").val(),
+            product_qty: normalizedQuantity(),
+            size: $(".prod-size .selected").val(),
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+            action: "post",
+          },
+          success: function () {
+            localStorage.setItem("cart_open", "true");
+            $("#add-cart").addClass("is-added").text("Added to cart");
+            window.location.href = window.location.href;
+          },
+        });
+      });
+    })(window.jQuery);
+  </script>
 {% endblock %}

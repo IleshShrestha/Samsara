@@ -1,162 +1,127 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% load home_tags %}
 
-<div class="container">
-  <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-      <div class="col-md-9">
-        <div class="ibox">
-          <div class="ibox-title">
-            <span class="pull-right"
-              >(<strong>{{cart|length}}</strong>) items</span
-            >
-            <h5>Items in your cart</h5>
-          </div>
-          {% for product in cart_prod %} {% for key, value in cart_quant.items
-          %}
-          <!-- key = prod id, value = [[sizes][quantities]] -->
-          {% if key == product.id|stringformat:"s" %} {% for size, quant in
-          value.0|zip:value.1%}
-          <div class="ibox-content">
-            <div class="table-responsive">
-              <table class="table shoping-cart-table">
-                <tbody>
-                  <tr>
-                    <td width="90">
-                      <div class="cart-product-imitation"></div>
-                    </td>
-                    <td class="desc">
-                      <h3>
-                        <a href="#" class="text-navy"> {{product.name}} </a>
-                      </h3>
-                      <p class="small">{{product.description}}</p>
-                      <dl class="small m-b-none">
-                        <dt>Description lists</dt>
-                        <dd>
-                          A description list is perfect for defining terms.
-                        </dd>
-                      </dl>
+{% block title %}Cart | Samsara{% endblock %}
 
-                      <div class="m-t-sm">
-                        <a
-                          href="#"
-                          class="text-muted cart-del-summary"
-                          data-index="{{product.id}}"
-                          ><i class="fa fa-trash"></i> Remove item</a
-                        >
-                      </div>
-                    </td>
-
-                    {% if product.is_sale%}
-                    <td>
-                      ${{product.sale_price}}
-                      <s class="small text-muted">${{product.price}}</s>
-                    </td>
-                    {% else %}
-                    <td>${{product.price}}</td>
-
-                    {% endif%}
-                    <td width="65">
-                      <input
-                        type="text"
-                        class="form-control cart-sum"
-                        value="{{value}}"
-                        id="cart{{product.id}}"
-                        data-index="{{product.id}}"
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          {% endfor %} {%endif%} {%endfor%} {%endfor%}
-          <div class="ibox-content">
-            <button class="btn btn-primary pull-right">
-              <i class="fa fa fa-shopping-cart"></i> Checkout
-            </button>
-            <button class="btn btn-white">
-              <i class="fa fa-arrow-left"></i> Continue shopping
-            </button>
-          </div>
+{% block content %}
+  <section class="cart-page">
+    <div class="section-inner">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Your bag</p>
+          <h2>Cart</h2>
+          <p>Review your pieces before heading to Stripe Checkout.</p>
         </div>
+        <a class="button button--outline" href="{% url 'home' %}">Continue shopping</a>
       </div>
-      <div class="col-md-3">
-        <div class="ibox">
-          <div class="ibox-title">
-            <h5>Cart Summary</h5>
-          </div>
-          <div class="ibox-content">
-            <span> Total </span>
-            <h2 class="font-bold">{{total}}</h2>
 
-            <hr />
-            <span class="text-muted small">
-              *Applicable taxes and fees will be applied on checkout
-            </span>
-            <div class="m-t-sm">
-              <div class="btn-group">
-                <a
-                  href="{% url 'create_checkout_session'%}"
-                  class="btn btn-primary btn-sm"
-                  ><i class="fa fa-shopping-cart"></i> Checkout</a
-                >
-                <a href="#" class="btn btn-white btn-sm"> Cancel</a>
-              </div>
+      <div class="cart-layout">
+        <div class="cart-summary-list">
+          {% for product in cart_products %}
+            {% for key, value in cart_quantities.items %}
+              {% if key == product.id|stringformat:"s" %}
+                {% for size, quant in value.0|zip:value.1 %}
+                  <article class="cart-summary-item">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+                    <div>
+                      <p class="eyebrow">Size {{ size }}</p>
+                      <h2>{{ product.name }}</h2>
+                      <p class="muted">{{ product.description }}</p>
+                      <div class="quantity">
+                        <button class="minus summary-minus" type="button" data-index="{{ product.id }}" data-quantity="{{ quant }}" data-size="{{ size }}">-</button>
+                        <span class="item-quantity">{{ quant }}</span>
+                        <button class="plus summary-plus" type="button" data-index="{{ product.id }}" data-quantity="{{ quant }}" data-size="{{ size }}">+</button>
+                      </div>
+                    </div>
+                    <div class="cart-summary-item__actions">
+                      <p class="product-card__price">
+                        {% if product.is_sale %}
+                          ${{ product.sale_price }}
+                        {% else %}
+                          ${{ product.price }}
+                        {% endif %}
+                      </p>
+                      <button class="text-button cart-del-summary" type="button" data-index="{{ product.id }}" data-size="{{ size }}">Remove</button>
+                    </div>
+                  </article>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          {% empty %}
+            <div class="empty-cart">
+              <p>Your cart is empty.</p>
+              <a href="{% url 'home' %}">Shop the drop</a>
             </div>
-          </div>
+          {% endfor %}
         </div>
+
+        <aside class="cart-summary-card">
+          <h2>Summary</h2>
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <strong>${{ total|default:"0.00" }}</strong>
+          </div>
+          <div class="summary-row">
+            <span>Shipping and tax</span>
+            <span class="muted">Calculated in checkout</span>
+          </div>
+          {% if total %}
+            <a class="checkout-button" href="{% url 'create_checkout_session' %}">Checkout</a>
+          {% else %}
+            <a class="checkout-button" href="{% url 'home' %}">Shop the drop</a>
+          {% endif %}
+        </aside>
       </div>
     </div>
-  </div>
-</div>
+  </section>
+{% endblock %}
 
-<script>
-  // update cart
-  $(document).on("change", ".cart-sum", function (e) {
-    var productid = $(this).data("index");
+{% block extra_scripts %}
+  <script>
+    (function ($) {
+      if (!$) return;
 
-    e.preventDefault();
-    $.ajax({
-      type: "GET",
-      url: "{% url 'cart_update' %}",
-      data: {
-        product_id: productid,
-        product_qty: $("#cart" + productid).val(),
-        csrfmiddlewaretoken: "{{csrf_token}}",
-        action: "post",
-      },
+      $(document).on("click", ".summary-plus, .summary-minus", function (e) {
+        e.preventDefault();
+        var currentQuantity = parseInt($(this).data("quantity"), 10);
+        var type = $(this).hasClass("summary-plus") ? "+" : "-";
+        var nextQuantity = type === "+" ? currentQuantity + 1 : currentQuantity - 1;
 
-      success: function (json) {
-        // document.getElementById("cart_quantity").textContent = json.qty
-        location.reload();
-      },
+        if (nextQuantity < 1) return;
 
-      error: function (xhr, errmsg, err) {},
-    });
-  });
+        $.ajax({
+          type: "POST",
+          url: "{% url 'cart_update' %}",
+          data: {
+            product_id: $(this).data("index"),
+            size: $(this).data("size"),
+            product_qty: nextQuantity,
+            type: type,
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+            action: "post",
+          },
+          success: function () {
+            location.reload();
+          },
+        });
+      });
 
-  // delete item from the cart
-
-  $(document).on("click", ".cart-del-summary", function (e) {
-    var productid = $(this).data("index");
-
-    e.preventDefault();
-    $.ajax({
-      type: "POST",
-      url: "{% url 'cart_delete' %}",
-      data: {
-        product_id: productid,
-        csrfmiddlewaretoken: "{{csrf_token}}",
-        action: "post",
-      },
-
-      success: function (json) {
-        location.reload();
-      },
-
-      error: function (xhr, errmsg, err) {},
-    });
-  });
-</script>
-
+      $(document).on("click", ".cart-del-summary", function (e) {
+        e.preventDefault();
+        $.ajax({
+          type: "POST",
+          url: "{% url 'cart_delete' %}",
+          data: {
+            product_id: $(this).data("index"),
+            size: $(this).data("size"),
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+            action: "post",
+          },
+          success: function () {
+            location.reload();
+          },
+        });
+      });
+    })(window.jQuery);
+  </script>
 {% endblock %}

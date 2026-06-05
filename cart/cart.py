@@ -126,5 +126,7 @@ class Cart():
             index = self.cart[product_id][0].index(size)
             del self.cart[product_id][0][index]
             del self.cart[product_id][1][index]
+            if not self.cart[product_id][0]:
+                del self.cart[product_id]
 
         self.session.modified = True
