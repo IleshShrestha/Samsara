@@ -3,14 +3,6 @@
 {% block title %}{{ product.name }} | Samsara{% endblock %}
 
 {% block content %}
-  {% if messages %}
-    <div class="messages">
-      {% for message in messages %}
-        <div class="message">{{ message }}</div>
-      {% endfor %}
-    </div>
-  {% endif %}
-
   <section class="page-section">
     <div class="section-inner">
       <a class="back-link" href="{% url 'home' %}">Back to shop</a>

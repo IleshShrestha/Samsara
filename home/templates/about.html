@@ -1,28 +1,194 @@
 {% extends 'base.html' %}
-{% block content %}
-<header class="bg-dark py-5">
-    <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">About Us....</h1>
-            <p class="lead fw-normal text-white-50 mb-0">Welcome to Samsara</p>
-        </div>
-    </div>
-</header>
 
-<div class="container">
-    <div class="row">
-        <center>
-            <div class="col-8">
-                <p align="justify">
-                    <br> </br>
-                    orem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae sapien lectus. Aenean mi urna, viverra ut elementum a, elementum nec risus. Etiam ut tincidunt dolor, quis aliquam ante. Suspendisse potenti. Suspendisse sollicitudin ante a enim dictum tincidunt. Quisque sagittis eget tortor eu consectetur. Fusce imperdiet lacus orci, nec ullamcorper ligula vulputate in. Vivamus nec quam non lectus dictum volutpat.
-                    <br> </br>
-                    Nullam luctus orci id elit pretium tincidunt. Suspendisse elementum mollis nisi consequat accumsan. Donec fringilla, felis et commodo congue, justo lacus hendrerit massa, a tincidunt felis neque at ligula. Sed malesuada augue neque, id luctus enim mattis non. Praesent consectetur purus sapien, vel ullamcorper nisi lobortis ut. Donec in tortor aliquam, tempus mauris sed, bibendum nibh. Fusce tristique, ante vitae tristique posuere, neque erat volutpat nisl, non fermentum libero est vitae massa.
-                    <br> </br>
-                    Phasellus aliquet arcu ac tortor euismod blandit. Nullam bibendum, purus eu pharetra luctus, enim ligula posuere purus, eget efficitur ligula nulla sed lacus. Nullam quis lectus nibh. Duis porttitor facilisis quam sed placerat. Maecenas iaculis volutpat mi, auctor efficitur dui venenatis sit amet. Nullam sit amet sollicitudin ex. Nunc non nulla porta, egestas tortor id, eleifend dui.
-                </p>
-            </div>
-        </center>
+{% block title %}The Samsara Story{% endblock %}
+
+{% block content %}
+  <section class="about-hero">
+    <div class="about-hero__content">
+      <p class="eyebrow">About Samsara</p>
+      <h1>The Samsara Story</h1>
+      <p>
+        Where ancient wisdom meets modern streets. A cycle of rebirth, told
+        through fabric.
+      </p>
     </div>
-</div>
+  </section>
+
+  <section class="page-section about-copy">
+    <div class="about-copy__inner">
+      <p class="eyebrow">The philosophy</p>
+      <h2>What is Samsara?</h2>
+      <div class="about-rich-text">
+        <p>
+          <strong><em>Samsara</em></strong> is an ancient concept describing the
+          endless cycle of birth, death, and rebirth. It is the wheel of life
+          that keeps turning, forever evolving, forever transforming.
+        </p>
+        <p>
+          We chose this name because it represents who we are: a diaspora brand
+          caught between two worlds, constantly reinventing ourselves while
+          staying rooted in our heritage. Every collection is a rebirth. Every
+          design tells a story. Every garment carries the weight of generations.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section about-split">
+    <div class="section-inner">
+      <div class="about-split__copy">
+        <p class="eyebrow">The mission</p>
+        <h2>Bridging Two Worlds</h2>
+        <p>
+          We are not trying to recreate traditional Indian wear. We are not
+          diluting our heritage to fit in. We are doing something different:
+          merging the bold aesthetics of modern streetwear with the depth and
+          spirituality of Indian culture.
+        </p>
+        <p>
+          Drop shoulders. Boxy fits. Heavyweight cottons. Clean lines. These
+          are the tools of contemporary street fashion, but the stories woven
+          into them are timeless.
+        </p>
+      </div>
+      <div class="about-split__image">
+        <img
+          src="https://images.unsplash.com/photo-1568873722374-2d6fd6f24482?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080"
+          alt="Modern Indian streetwear"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section about-copy">
+    <div class="about-copy__inner">
+      <p class="eyebrow">Design language</p>
+      <h2>Our Design Language</h2>
+      <div class="about-pillars">
+        <article>
+          <span></span>
+          <h3>Minimalist</h3>
+          <p>
+            Clean lines and uncluttered aesthetics. We let the silhouette speak
+            before the graphics do.
+          </p>
+        </article>
+        <article>
+          <span></span>
+          <h3>Earthy</h3>
+          <p>
+            Deep stone tones with muted orange accents: grounded colors that
+            feel timeless and rooted.
+          </p>
+        </article>
+        <article>
+          <span></span>
+          <h3>Story-Driven</h3>
+          <p>
+            Every piece carries meaning, whether through subtle motifs or overt
+            cultural references.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section about-dark">
+    <div class="about-copy__inner">
+      <p class="eyebrow">The journey</p>
+      <h2>Designed in the Diaspora</h2>
+      <div class="about-rich-text">
+        <p>
+          Samsara was born out of a feeling familiar to many second-generation
+          immigrants: being caught between two identities. Not quite here, not
+          quite there. Too American for India, too Indian for America.
+        </p>
+        <p>
+          Instead of seeing this as a weakness, we embraced it. Our duality
+          became our strength. We started designing clothes that reflected this
+          experience: modern enough for the streets, meaningful enough to carry
+          our heritage forward.
+        </p>
+        <p>
+          This is streetwear for the in-between. For those who code-switch
+          effortlessly. For those whose playlists jump from Bollywood to hip-hop.
+          For those who grew up on chai and coffee, on dosas and pizza, on
+          tradition and rebellion.
+        </p>
+      </div>
+      <blockquote>
+        We are not just building a brand. We are building a home for people who
+        have always felt like they existed in between worlds.
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="page-section about-copy">
+    <div class="about-copy__inner">
+      <p class="eyebrow">What is next</p>
+      <h2>The Cycle Continues</h2>
+      <div class="about-rich-text">
+        <p>
+          Drop 001 is just the beginning. We are building a universe where every
+          collection explores a different aspect of Indian culture: mythology,
+          philosophy, festivals, folklore. Each drop tells a new story and pushes
+          the boundaries of what Indian streetwear can be.
+        </p>
+        <p>
+          We are not interested in fast fashion or trend-chasing. Samsara is
+          about creating pieces that last, that mean something, and that stay in
+          your rotation for years.
+        </p>
+      </div>
+      <a class="button" href="{% url 'home' %}">Explore Drop 001</a>
+    </div>
+  </section>
+
+  <section class="page-section about-values-band">
+    <div class="section-inner">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Values</p>
+          <h2>What We Stand For</h2>
+          <p>The values that guide every decision, every design, every stitch.</p>
+        </div>
+      </div>
+      <div class="about-values">
+        <article>
+          <span>1</span>
+          <h3>Authenticity</h3>
+          <p>No performative culture. No shallow references. We honor our roots deeply.</p>
+        </article>
+        <article>
+          <span>2</span>
+          <h3>Quality</h3>
+          <p>Heavyweight materials and thoughtful construction, built to last through cycles.</p>
+        </article>
+        <article>
+          <span>3</span>
+          <h3>Community</h3>
+          <p>Designed by the diaspora, for the diaspora. This is our collective story.</p>
+        </article>
+        <article>
+          <span>4</span>
+          <h3>Evolution</h3>
+          <p>Always transforming, always growing. Like samsara itself, never static.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section about-cta">
+    <div class="about-copy__inner">
+      <h2>Join the Cycle</h2>
+      <p>
+        Samsara is more than a brand. It is a movement toward a new language for
+        Indian streetwear.
+      </p>
+      <div class="about-cta__actions">
+        <a class="button button--light" href="{% url 'home' %}">Shop now</a>
+        <a class="button button--outline-light" href="{% url 'contact' %}">Get in touch</a>
+      </div>
+    </div>
+  </section>
 {% endblock %}

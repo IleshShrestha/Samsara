@@ -7,6 +7,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% block title %}Samsara{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css"
+    />
     <link rel="stylesheet" href="{% static 'css/samsara-redesign.css' %}" />
     {% block extra_head %}{% endblock %}
   </head>
@@ -18,7 +22,7 @@
         <nav class="site-nav" aria-label="Primary navigation">
           <a href="{% url 'main' %}">Home</a>
           <a href="{% url 'home' %}">Shop</a>
-          <a href="{% url 'about' %}">Story</a>
+          <a href="{% url 'about' %}">About</a>
           <a href="{% url 'contact' %}">Contact</a>
         </nav>
 
@@ -109,9 +113,32 @@
     </div>
 
     <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <script>
       (function ($) {
         if (!$) return;
+
+        if (window.toastr) {
+          toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            newestOnTop: true,
+            positionClass: "toast-top-right",
+            preventDuplicates: true,
+            showDuration: 160,
+            hideDuration: 180,
+            timeOut: 3200,
+            extendedTimeOut: 1200,
+          };
+
+          {% if messages %}
+            {% for message in messages %}
+              var messageLevel = "{{ message.tags|default:'info'|escapejs }}".split(" ")[0] || "info";
+              var toastMethod = toastr[messageLevel] ? messageLevel : "info";
+              toastr[toastMethod]("{{ message|escapejs }}");
+            {% endfor %}
+          {% endif %}
+        }
 
         function openCart() {
           $("#mySidenav").addClass("is-open");
